@@ -70,9 +70,12 @@ function MainGame() {
 
   return (
     <div>
-        <img className={styles.gameImage} onClick={handleClick}
-            src="./src/assets/images/wheres-waldo-beach.jpg"
+        {data && 
+            <img className={styles.gameImage} onClick={handleClick}
+            src={data[0].image}
+            
         />
+        }
           <div>{data && <h1>{data[0].title}</h1>}</div>
         {showDropdown &&
               <div className={styles.targetSquare} style={{ left: mouseCoord[0], top: mouseCoord[1], width: screenSize, height: screenSize }}><Dropdown characters={characters}/></div>}

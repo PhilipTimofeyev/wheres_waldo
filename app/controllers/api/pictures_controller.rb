@@ -5,7 +5,11 @@ class Api::PicturesController < ApplicationController
   def index
     @pictures = Picture.all
 
-    render json: @pictures
+    all_pictures = @pictures.map do |picture|
+      picture.as_json.merge(image: url_for(picture.image))
+    end
+
+    render json: all_pictures
   end
 
   # GET /pictures/1
