@@ -1,10 +1,14 @@
-import React from 'react'
+import { React, useState } from 'react'
 
 function MainGame() {
+
+    const [mouseCoord, setMouseCoord] = useState()
 
     function handleClick(e) {
         const coordX = e.clientX
         const coordY = e.clientY
+
+        setMouseCoord([coordX, coordY])
 
         console.log([coordX, coordY])
     }
