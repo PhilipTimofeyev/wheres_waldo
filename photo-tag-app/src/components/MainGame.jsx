@@ -24,7 +24,7 @@ function MainGame() {
 
           {/* {console.log(mouseCoord[0])} */}
 
-          {showCircle && <div className={styles.circle} style={{ left: mouseCoord[0], top: mouseCoord[1] }}></div>}
+          {showCircle && <div className={styles.targetSquare} style={{ left: mouseCoord[0], top: mouseCoord[1], width:20, height:20 }}></div>}
 
     </div>
   )
