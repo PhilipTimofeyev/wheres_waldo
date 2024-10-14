@@ -9,7 +9,7 @@ function MainGame() {
     const [mouseCoord, setMouseCoord] = useState()
     const [showDropdown, setShowDropdown] = useState(false); 
     const [bounds, setBounds] = useState();
-    const [showCircle, setShowCircle] = useState(false); 
+    const [showSquare, setShowSquare] = useState(false); 
     const [data, setData] = useState();
 
     useEffect(() => {
@@ -27,7 +27,7 @@ function MainGame() {
 
     function handleClick(e) {
         setMouseCoord([e.clientX, e.clientY])
-        setShowCircle(true)
+        setShowSquare(true)
         setShowDropdown(true)
         setBounds(e.target.getBoundingClientRect())
     }
@@ -74,20 +74,33 @@ function MainGame() {
         const squareValidAreaY = (bounds.width * SQUARE_SIZE / 2) + 10
 
         return (userX > (charX - squareValidAreaX) && userX < (charX + squareValidAreaX)) &&
-            (userY > (charY - squareValidAreaY) && userY < (charY + squareValidAreaY))
+                (userY > (charY - squareValidAreaY) && userY < (charY + squareValidAreaY))
     }
+    
+    function picture() {
+        return (
+            <img className={styles.gameImage} onClick={handleClick} src={data.picture.image} />
+        )
+    }
+    
+    function dropdown() {
+        return (
+            <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}><Dropdown handleSelection={handleSelection} characters={data.characters} bounds={bounds} /></div>
+        )
+    }
+
+    function squareMarker() {
+        return (
+            <div className={styles.targetSquare} style={{ left: mouseCoord[0], top: mouseCoord[1], width: bounds.width * SQUARE_SIZE, height: bounds.width * SQUARE_SIZE, borderWidth: bounds.width * .003 }}></div>
+        )
+    }
+
 
   return (
     <div>
-        {data && 
-            <img className={styles.gameImage} onClick={handleClick} src={data.picture.image}/>
-        }
-          <div>{data && <h1>{data.picture.title}</h1>}</div>
-        {showDropdown &&
-              <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}><Dropdown handleSelection = {handleSelection} characters={data.characters} bounds = {bounds}/></div>}
-        
-        {showCircle && <div className={styles.targetSquare} style={{ left: mouseCoord[0], top: mouseCoord[1], width: bounds.width * SQUARE_SIZE, height: bounds.width * SQUARE_SIZE, borderWidth: bounds.width * .003 }}></div>}
-
+        {data && picture()}
+        {showDropdown && dropdown()}
+        {showSquare && squareMarker()}
     </div>
   )
 }
