@@ -28,8 +28,8 @@ function MainGame() {
 
     function handleClick(e) {
         setMouseCoord([e.clientX, e.clientY])
-        setShowSquare(true)
-        setShowDropdown(true)
+        showSquare ? setShowSquare(false) : setShowSquare(true)
+        showDropdown ? setShowDropdown(false) : setShowDropdown(true)
         setBounds(e.target.getBoundingClientRect())
     }
 
@@ -66,7 +66,7 @@ function MainGame() {
         console.log(verifyCoord(userCoord, charCoord))
         if (verifyCoord(userCoord, charCoord)) {
             setFound([
-                { name: charObj.name, id: charObj.id, x_coord: mouseCoord[0], y_coord: mouseCoord[1] }
+                ...found, { name: charObj.name, id: charObj.id, x_coord: mouseCoord[0], y_coord: mouseCoord[1] }
             ])
         }
     }
