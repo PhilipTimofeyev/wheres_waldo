@@ -1,6 +1,7 @@
 .dropdown {
     box-sizing: border-box;
     width: 8rem;
+    height: auto;
     margin: auto;
     position: absolute;
     background-color: rgba(187, 23, 23, 0.9);
@@ -26,7 +27,7 @@
 .character:hover {
     background-color: rgb(9, 89, 100);
     width: 80%;
-    font-size: 1.2rem;
+    font-size: .25rem;
     text-align: center;
     border-radius: 10px;
 

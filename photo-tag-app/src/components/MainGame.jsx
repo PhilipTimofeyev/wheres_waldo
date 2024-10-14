@@ -3,7 +3,7 @@ import Dropdown from './Dropdown';
 import styles from './MainGame.module.css'
 
 const API_URL = "http://127.0.0.1:3000/api/pictures/1"
-const SQUARE_SIZE = window.innerWidth * .015
+const SQUARE_SIZE = .015
 
 function MainGame() {
     const [mouseCoord, setMouseCoord] = useState()
@@ -55,15 +55,12 @@ function MainGame() {
         return userCoord
     }
 
-
-
     function handleSelection(e) {
         const charName = e.target.innerText
         const charObj = data.characters.find(char => char.name === charName)
 
         const userCoord = normalizedUserCoord()
         const charCoord = normalizeCharCoord(charObj)
-
         
          console.log(verifyCoord(userCoord, charCoord))
         return verifyCoord(userCoord, charCoord)
@@ -73,12 +70,16 @@ function MainGame() {
         const {userX, userY} = userCoord
         const {charX, charY} = charCoord
 
-        const squareValidAreaX = (SQUARE_SIZE / 2)
-        const squareValidAreaY = (SQUARE_SIZE / 2) + 10
+        const squareValidAreaX = (bounds.width * SQUARE_SIZE / 2)
+        const squareValidAreaY = (bounds.width * SQUARE_SIZE / 2) + 10
+
+        console.log(squareValidAreaX)
 
         return (userX > (charX - squareValidAreaX) && userX < (charX + squareValidAreaX)) &&
             (userY > (charY - squareValidAreaY) && userY < (charY + squareValidAreaY))
     }
+
+    // console.log(bounds)
 
   return (
     <div>
@@ -89,9 +90,9 @@ function MainGame() {
         }
           <div>{data && <h1>{data.picture.title}</h1>}</div>
         {showDropdown &&
-              <div className={styles.targetSquare} style={{ left: mouseCoord[0], top: mouseCoord[1], width: SQUARE_SIZE, height: SQUARE_SIZE }}><Dropdown handleSelection = {handleSelection} characters={data.characters}/></div>}
+              <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}><Dropdown handleSelection = {handleSelection} characters={data.characters} bounds = {bounds}/></div>}
         
-          {/* {showCircle && <div className={styles.targetSquare} style={{ left: mouseCoord[0], top: mouseCoord[1], width: SQUARE_SIZE, height: SQUARE_SIZE }}></div>} */}
+          {showCircle && <div className={styles.targetSquare} style={{ left: mouseCoord[0], top: mouseCoord[1], width: bounds.width * SQUARE_SIZE, height: bounds.width * SQUARE_SIZE, borderWidth: bounds.width * .003 }}></div>}
 
     </div>
   )
