@@ -2,11 +2,6 @@ import React from 'react'
 import styles from './Dropdown.module.css'
 
 function Dropdown(props) {
-
-    // function handleClick(e) {
-    //     console.log(e.target.innerText)
-    // }
-
     const characterList = props.characters.map(character => 
         <li onClick={props.handleSelection} key={character.id} className={styles.character}>{character.name}</li>
     )

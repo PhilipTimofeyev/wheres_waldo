@@ -263,6 +263,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 7.2.1)
   rubocop-rails-omakase
+  ruby-vips (~> 2.1, >= 2.1.4)
   tzinfo-data
 
 BUNDLED WITH
