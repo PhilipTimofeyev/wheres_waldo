@@ -30,8 +30,11 @@ function MainGame() {
         setMouseCoord([e.clientX, e.clientY])
         setShowCircle(true)
         setShowDropdown(true)
+    }
 
-        console.log(verifyCoord(e.clientX, e.clientY))
+    function handleSelection(e) {
+        return e.target.innerText === data.characters[0].name &&
+            verifyCoord(mouseCoord[0], mouseCoord[1])
     }
 
     function verifyCoord(x, y) {
@@ -57,7 +60,7 @@ function MainGame() {
         }
           <div>{data && <h1>{data.picture.title}</h1>}</div>
         {showDropdown &&
-              <div className={styles.targetSquare} style={{ left: mouseCoord[0], top: mouseCoord[1], width: SQUARE_SIZE, height: SQUARE_SIZE }}><Dropdown characters={data.characters}/></div>}
+              <div className={styles.targetSquare} style={{ left: mouseCoord[0], top: mouseCoord[1], width: SQUARE_SIZE, height: SQUARE_SIZE }}><Dropdown handleSelection = {handleSelection} characters={data.characters}/></div>}
         
           {showCircle && <div className={styles.targetSquare} style={{ left: mouseCoord[0], top: mouseCoord[1], width: SQUARE_SIZE, height: SQUARE_SIZE }}></div>}
 

@@ -3,12 +3,12 @@ import styles from './Dropdown.module.css'
 
 function Dropdown(props) {
 
-    function handleClick(e) {
-        console.log(e.target.innerText)
-    }
+    // function handleClick(e) {
+    //     console.log(e.target.innerText)
+    // }
 
     const characterList = props.characters.map(character => 
-        <li onClick={handleClick} key={character.id} className={styles.character}>{character.name}</li>
+        <li onClick={props.handleSelection} key={character.id} className={styles.character}>{character.name}</li>
     )
 
     return (
