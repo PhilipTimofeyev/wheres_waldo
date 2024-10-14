@@ -11,6 +11,7 @@ function MainGame() {
     const [bounds, setBounds] = useState();
     const [showSquare, setShowSquare] = useState(false); 
     const [data, setData] = useState();
+    const [found, setFound] = useState([])
 
     useEffect(() => {
         const dataFetch = async () => {
@@ -63,7 +64,11 @@ function MainGame() {
         const charCoord = normalizeCharCoord(charObj)
         
         console.log(verifyCoord(userCoord, charCoord))
-        return verifyCoord(userCoord, charCoord)
+        if (verifyCoord(userCoord, charCoord)) {
+            setFound([
+                { name: charObj.name, id: charObj.id, x_coord: mouseCoord[0], y_coord: mouseCoord[1] }
+            ])
+        }
     }
 
     function verifyCoord(userCoord, charCoord) {
@@ -82,7 +87,7 @@ function MainGame() {
             <img className={styles.gameImage} onClick={handleClick} src={data.picture.image} />
         )
     }
-    
+
     function dropdown() {
         return (
             <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}><Dropdown handleSelection={handleSelection} characters={data.characters} bounds={bounds} /></div>
@@ -95,12 +100,17 @@ function MainGame() {
         )
     }
 
+    const foundChars = found.map(char => {
+        return < div key={char.id} className={styles.foundSquare} style={{ left: char.x_coord, top: char.y_coord, width: bounds.width * SQUARE_SIZE, height: bounds.width * SQUARE_SIZE, borderWidth: bounds.width * .003 }}></div >
+    })
+
 
   return (
     <div>
         {data && picture()}
         {showDropdown && dropdown()}
         {showSquare && squareMarker()}
+        {found && foundChars}
     </div>
   )
 }
