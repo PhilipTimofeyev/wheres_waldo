@@ -8,8 +8,6 @@ function Dropdown(props) {
         <li onClick={props.handleSelection} key={character.id} className={styles.character}>{character.name}</li>
     )
 
-    console.log(props.bounds)
-
     return (
         <div className={styles.dropdown} style={{ width: props.bounds.width * DROPDOWN_SIZE }}>
             <ul className={styles.characterList}>

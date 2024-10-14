@@ -62,7 +62,7 @@ function MainGame() {
         const userCoord = normalizedUserCoord()
         const charCoord = normalizeCharCoord(charObj)
         
-         console.log(verifyCoord(userCoord, charCoord))
+        console.log(verifyCoord(userCoord, charCoord))
         return verifyCoord(userCoord, charCoord)
     }
 
@@ -73,26 +73,20 @@ function MainGame() {
         const squareValidAreaX = (bounds.width * SQUARE_SIZE / 2)
         const squareValidAreaY = (bounds.width * SQUARE_SIZE / 2) + 10
 
-        console.log(squareValidAreaX)
-
         return (userX > (charX - squareValidAreaX) && userX < (charX + squareValidAreaX)) &&
             (userY > (charY - squareValidAreaY) && userY < (charY + squareValidAreaY))
     }
 
-    // console.log(bounds)
-
   return (
     <div>
         {data && 
-            <img className={styles.gameImage} onClick={handleClick}
-            src={data.picture.image}
-        />
+            <img className={styles.gameImage} onClick={handleClick} src={data.picture.image}/>
         }
           <div>{data && <h1>{data.picture.title}</h1>}</div>
         {showDropdown &&
               <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}><Dropdown handleSelection = {handleSelection} characters={data.characters} bounds = {bounds}/></div>}
         
-          {showCircle && <div className={styles.targetSquare} style={{ left: mouseCoord[0], top: mouseCoord[1], width: bounds.width * SQUARE_SIZE, height: bounds.width * SQUARE_SIZE, borderWidth: bounds.width * .003 }}></div>}
+        {showCircle && <div className={styles.targetSquare} style={{ left: mouseCoord[0], top: mouseCoord[1], width: bounds.width * SQUARE_SIZE, height: bounds.width * SQUARE_SIZE, borderWidth: bounds.width * .003 }}></div>}
 
     </div>
   )
