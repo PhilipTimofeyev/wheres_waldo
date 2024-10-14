@@ -14,7 +14,10 @@ class Api::PicturesController < ApplicationController
 
   # GET /pictures/1
   def show
-    render json: @picture
+    picture_with_image = @picture.as_json.merge(image: url_for(@picture.image))
+    p picture_with_image
+    p @picture.characters
+    render json: { picture: picture_with_image, characters: @picture.characters }
   end
 
   # POST /pictures

@@ -14,8 +14,8 @@ function Dropdown(props) {
     return (
         <div className={styles.dropdown}>
             <ul className={styles.characterList}>
-            {characterList}
-        </ul>
+                {characterList}
+            </ul>
         </div>
     )
 }
