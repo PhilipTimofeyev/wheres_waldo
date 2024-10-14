@@ -4,12 +4,11 @@ import styles from './MainGame.module.css'
 
 const API_URL = "http://127.0.0.1:3000/api/pictures/1"
 const SQUARE_SIZE = window.innerWidth * .015
-const ORIGINAL_SCREEN_DIM_X = 2560 
-const ORIGINAL_SCREEN_DIM_Y = 1328 
 
 function MainGame() {
     const [mouseCoord, setMouseCoord] = useState()
     const [showDropdown, setShowDropdown] = useState(false); 
+    const [bounds, setBounds] = useState();
     const [showCircle, setShowCircle] = useState(false); 
     const [data, setData] = useState();
 
@@ -30,58 +29,55 @@ function MainGame() {
         setMouseCoord([e.clientX, e.clientY])
         setShowCircle(true)
         setShowDropdown(true)
-        const bounds = e.target.getBoundingClientRect()
-        const x = e.clientX - bounds.left
-        const y = e.clientY - bounds.top
-        
-        console.log(bounds)
-        console.log([e.clientX, e.clientY])
-        console.log([x, y])
-        console.log(window.innerWidth)
-        // console.log(e.clientX)
-        // console.log(data.characters[0].x_coord)
-        // console.log(data.characters[0].x_coord / window.innerWidth)
+        setBounds(e.target.getBoundingClientRect())
     }
 
-    function normalizeCoord(character) {
-        const x_perc = window.innerWidth / ORIGINAL_SCREEN_DIM_X
-        const y_perc = window.innerHeight / ORIGINAL_SCREEN_DIM_Y
+    function normalizeCharCoord(character) {
+        // calculates ratio of character position relative to the image size
+        const x_perc = character.x_coord / data.picture.image_width
+        const y_perc = character.y_coord / data.picture.image_height
 
-        const normalizedX = character.x_coord * x_perc
-        const normalizedY = character.y_coord * y_perc
+        const x = bounds.width * x_perc
+        const y = bounds.height * y_perc
 
-        return [normalizedX, normalizedY]
+        const charCoord = { charX: x, charY: y }
+
+        return charCoord
+    }
+
+    function normalizedUserCoord() {
+        // calculates the mouse position relative to the image
+        const x = mouseCoord[0] - bounds.left
+        const y = mouseCoord[1] - bounds.top
+
+        const userCoord = { userX: x, userY: y }
+
+        return userCoord
     }
 
 
 
     function handleSelection(e) {
-        const bounds = e.target.getBoundingClientRect()
-        const x = e.clientX - bounds.left
-        const y = e.clientY - bounds.top
+        const charName = e.target.innerText
+        const charObj = data.characters.find(char => char.name === charName)
 
-        // console.log(x, y)
+        const userCoord = normalizedUserCoord()
+        const charCoord = normalizeCharCoord(charObj)
 
-        console.log(e.target.innerText === data.characters[0].name &&
-            verifyCoord(x, y))
-        return e.target.innerText === data.characters[0].name &&
-            verifyCoord(mouseCoord[0], mouseCoord[1])
+        
+         console.log(verifyCoord(userCoord, charCoord))
+        return verifyCoord(userCoord, charCoord)
     }
 
-    function verifyCoord(x, y) {
-        // console.log([x, y])
-        // console.log([data.characters[0].x_coord, data.characters[0].y_coord])
+    function verifyCoord(userCoord, charCoord) {
+        const {userX, userY} = userCoord
+        const {charX, charY} = charCoord
 
-        const squareValidAreaX = (SQUARE_SIZE / 2) + 10
-        const squareValidAreaY = (SQUARE_SIZE / 2) + 20
+        const squareValidAreaX = (SQUARE_SIZE / 2)
+        const squareValidAreaY = (SQUARE_SIZE / 2) + 10
 
-        const normalizedX = normalizeCoord(data.characters[0])[0]
-        const normalizedY = normalizeCoord(data.characters[0])[1]
-
-        console.log([normalizedX, normalizedY])
-
-        return (x > (normalizedX - squareValidAreaX) && x < (normalizedX + squareValidAreaX)) &&
-            (y > (normalizedY - squareValidAreaY) && y < (normalizedY + squareValidAreaY))
+        return (userX > (charX - squareValidAreaX) && userX < (charX + squareValidAreaX)) &&
+            (userY > (charY - squareValidAreaY) && userY < (charY + squareValidAreaY))
     }
 
   return (
@@ -92,8 +88,8 @@ function MainGame() {
         />
         }
           <div>{data && <h1>{data.picture.title}</h1>}</div>
-        {/* {showDropdown &&
-              <div className={styles.targetSquare} style={{ left: mouseCoord[0], top: mouseCoord[1], width: SQUARE_SIZE, height: SQUARE_SIZE }}><Dropdown handleSelection = {handleSelection} characters={data.characters}/></div>} */}
+        {showDropdown &&
+              <div className={styles.targetSquare} style={{ left: mouseCoord[0], top: mouseCoord[1], width: SQUARE_SIZE, height: SQUARE_SIZE }}><Dropdown handleSelection = {handleSelection} characters={data.characters}/></div>}
         
           {/* {showCircle && <div className={styles.targetSquare} style={{ left: mouseCoord[0], top: mouseCoord[1], width: SQUARE_SIZE, height: SQUARE_SIZE }}></div>} */}
 

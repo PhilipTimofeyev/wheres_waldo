@@ -15,11 +15,6 @@ class Api::PicturesController < ApplicationController
   # GET /pictures/1
   def show
     picture_with_image = @picture.as_json.merge(image: url_for(@picture.image))
-    p picture_with_image
-    p @picture.characters
-    puts "------------"
-    p @picture
-    p ActiveStorage::Analyzer::ImageAnalyzer::Vips.new(@picture.image.blob).metadata
     render json: { picture: picture_with_image, characters: @picture.characters }
   end
 
