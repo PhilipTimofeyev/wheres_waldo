@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from 'react'
+import { React, useState, useEffect, useRef } from 'react'
 import Timer from './Timer';
 import Dropdown from './Dropdown';
 import styles from './MainGame.module.css'
@@ -9,12 +9,11 @@ const SQUARE_SIZE = .015
 function MainGame({startGame}) {
     const [mouseCoord, setMouseCoord] = useState()
     const [showDropdown, setShowDropdown] = useState(false); 
-    const [bounds, setBounds] = useState();
-    const [showSquare, setShowSquare] = useState(false); 
     const [data, setData] = useState();
     const [found, setFound] = useState([])
     const [finalTime, setFinalTime] = useState()
     const [endGame, setEndGame] = useState()
+    const bounds = useRef()
     
 
     useEffect(() => {
@@ -32,9 +31,8 @@ function MainGame({startGame}) {
 
     function handleClick(e) {
         setMouseCoord([e.clientX, e.clientY])
-        showSquare ? setShowSquare(false) : setShowSquare(true)
         showDropdown ? setShowDropdown(false) : setShowDropdown(true)
-        setBounds(e.target.getBoundingClientRect())
+        bounds.current = e.target.getBoundingClientRect()
     }
 
     function normalizeCharCoord(character) {
@@ -42,8 +40,8 @@ function MainGame({startGame}) {
         const x_perc = character.x_coord / data.picture.image_width
         const y_perc = character.y_coord / data.picture.image_height
 
-        const x = bounds.width * x_perc
-        const y = bounds.height * y_perc
+        const x = bounds.current.width * x_perc
+        const y = bounds.current.height * y_perc
 
         const charCoord = { charX: x, charY: y }
 
@@ -52,8 +50,8 @@ function MainGame({startGame}) {
 
     function normalizedUserCoord() {
         // calculates the mouse position relative to the image
-        const x = mouseCoord[0] - bounds.left
-        const y = mouseCoord[1] - bounds.top
+        const x = mouseCoord[0] - bounds.current.left
+        const y = mouseCoord[1] - bounds.current.top
 
         const userCoord = { userX: x, userY: y }
 
@@ -93,8 +91,8 @@ function MainGame({startGame}) {
         const {userX, userY} = userCoord
         const {charX, charY} = charCoord
 
-        const squareValidAreaX = (bounds.width * SQUARE_SIZE / 2)
-        const squareValidAreaY = (bounds.width * SQUARE_SIZE / 2) + 10
+        const squareValidAreaX = (bounds.current.width * SQUARE_SIZE / 2)
+        const squareValidAreaY = (bounds.current.width * SQUARE_SIZE / 2) + 10
 
         return (userX > (charX - squareValidAreaX) && userX < (charX + squareValidAreaX)) &&
                 (userY > (charY - squareValidAreaY) && userY < (charY + squareValidAreaY))
@@ -108,18 +106,18 @@ function MainGame({startGame}) {
 
     function dropdown() {
         return (
-            <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}><Dropdown handleSelection={handleSelection} characters={data.characters} bounds={bounds} found={found} /></div>
+            <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}><Dropdown handleSelection={handleSelection} characters={data.characters} bounds={bounds.current} found={found} /></div>
         )
     }
 
     function squareMarker() {
         return (
-            <div className={styles.targetSquare} style={{ left: mouseCoord[0], top: mouseCoord[1], width: bounds.width * SQUARE_SIZE, height: bounds.width * SQUARE_SIZE, borderWidth: bounds.width * .003 }}></div>
+            <div className={styles.targetSquare} style={{ left: mouseCoord[0], top: mouseCoord[1], width: bounds.current.width * SQUARE_SIZE, height: bounds.current.width * SQUARE_SIZE, borderWidth: bounds.current.width * .003 }}></div>
         )
     }
 
     const foundChars = found.map(char => {
-        return < div key={char.id} className={styles.foundSquare} style={{ left: char.x_coord, top: char.y_coord, width: bounds.width * SQUARE_SIZE, height: bounds.width * SQUARE_SIZE, borderWidth: bounds.width * .003 }}></div >
+        return < div key={char.id} className={styles.foundSquare} style={{ left: char.x_coord, top: char.y_coord, width: bounds.current.width * SQUARE_SIZE, height: bounds.current.width * SQUARE_SIZE, borderWidth: bounds.current.width * .003 }}></div >
     })
 
 
@@ -129,7 +127,7 @@ function MainGame({startGame}) {
         {finalTime && <h2>You did it in {finalTime} seconds!</h2>}
         {data && picture()}
         {showDropdown && dropdown()}
-        {showSquare && squareMarker()}
+        {showDropdown && squareMarker()}
         {found && foundChars}
     </div>
   )

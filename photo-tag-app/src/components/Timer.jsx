@@ -41,7 +41,6 @@ function Timer({startGame, setFinalTime, endGame}) {
     return (
         <div className={styles.timerDisplay}>
             <h1>{seconds}</h1>
-            <button className={styles.btn} onClick={startTimer}>Start</button>
         </div>
     );
 }
