@@ -1,17 +1,21 @@
 import { React, useState, useEffect } from 'react'
+import Timer from './Timer';
 import Dropdown from './Dropdown';
 import styles from './MainGame.module.css'
 
 const API_URL = "http://127.0.0.1:3000/api/pictures/1"
 const SQUARE_SIZE = .015
 
-function MainGame(props) {
+function MainGame({startGame}) {
     const [mouseCoord, setMouseCoord] = useState()
     const [showDropdown, setShowDropdown] = useState(false); 
     const [bounds, setBounds] = useState();
     const [showSquare, setShowSquare] = useState(false); 
     const [data, setData] = useState();
     const [found, setFound] = useState([])
+    const [finalTime, setFinalTime] = useState()
+    const [endGame, setEndGame] = useState()
+    
 
     useEffect(() => {
         const dataFetch = async () => {
@@ -58,8 +62,6 @@ function MainGame(props) {
 
 
     useEffect(() => {
-        // This callback function will run whenever myArray changes
-        console.log("myArray has been updated:", found);
         gameOver()
     }, [found]);
 
@@ -84,10 +86,7 @@ function MainGame(props) {
              allFound = data.characters.length === found.length
         }
 
-        if (allFound) {
-            props.setIsRunning(false)
-            alert(`You did it in ${props.seconds} seconds!`)
-        }
+        if (allFound) setEndGame(true)
     }
 
     function verifyCoord(userCoord, charCoord) {
@@ -126,6 +125,8 @@ function MainGame(props) {
 
   return (
     <div>
+        <Timer startGame={startGame} setFinalTime={setFinalTime} endGame={endGame} />
+        {finalTime && <h2>You did it in {finalTime} seconds!</h2>}
         {data && picture()}
         {showDropdown && dropdown()}
         {showSquare && squareMarker()}
