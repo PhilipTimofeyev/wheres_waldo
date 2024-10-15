@@ -72,14 +72,10 @@ function MainGame(props) {
         
         // console.log(verifyCoord(userCoord, charCoord))
         if (verifyCoord(userCoord, charCoord)) {
-            console.log("Hmm")
             setFound([
                 ...found, { name: charObj.name, id: charObj.id, x_coord: mouseCoord[0], y_coord: mouseCoord[1] }
             ])
         }
-
-
-
     }
 
     function gameOver() {
@@ -113,7 +109,7 @@ function MainGame(props) {
 
     function dropdown() {
         return (
-            <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}><Dropdown handleSelection={handleSelection} characters={data.characters} bounds={bounds} /></div>
+            <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}><Dropdown handleSelection={handleSelection} characters={data.characters} bounds={bounds} found={found} /></div>
         )
     }
 
