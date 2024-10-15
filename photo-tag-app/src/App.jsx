@@ -12,8 +12,8 @@ function App() {
 
   return (
     <>
-      <h1>Welcome to Where's Waldo!</h1>
-      <button className='startBtn' onClick={beginGame}>Start Game</button>
+      {!startGame && <h1>Welcome to Where's Waldo!</h1>}
+      {!startGame && <button className='startBtn' onClick={beginGame}>Start Game</button>}
       {startGame && <MainGame startGame={startGame}/>}
     </>
   )

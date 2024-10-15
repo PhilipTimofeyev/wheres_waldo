@@ -14,7 +14,6 @@ function MainGame({startGame}) {
     const [finalTime, setFinalTime] = useState()
     const [endGame, setEndGame] = useState()
     const bounds = useRef()
-    
 
     useEffect(() => {
         const dataFetch = async () => {
@@ -83,7 +82,6 @@ function MainGame({startGame}) {
         if (data) {
              allFound = data.characters.length === found.length
         }
-
         if (allFound) setEndGame(true)
     }
 
@@ -106,7 +104,10 @@ function MainGame({startGame}) {
 
     function dropdown() {
         return (
+            <>
             <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}><Dropdown handleSelection={handleSelection} characters={data.characters} bounds={bounds.current} found={found} /></div>
+            <div className={styles.targetSquare} style={{ left: mouseCoord[0], top: mouseCoord[1], width: bounds.current.width * SQUARE_SIZE, height: bounds.current.width * SQUARE_SIZE, borderWidth: bounds.current.width * .003 }}></div>
+            </>
         )
     }
 
@@ -123,11 +124,10 @@ function MainGame({startGame}) {
 
   return (
     <div>
-        <Timer startGame={startGame} setFinalTime={setFinalTime} endGame={endGame} />
-        {finalTime && <h2>You did it in {finalTime} seconds!</h2>}
+        {!finalTime && <Timer startGame={startGame} setFinalTime={setFinalTime} endGame={endGame} />}
+        {finalTime && <h1>You did it in {finalTime} seconds!</h1>}
         {data && picture()}
         {showDropdown && dropdown()}
-        {showDropdown && squareMarker()}
         {found && foundChars}
     </div>
   )
