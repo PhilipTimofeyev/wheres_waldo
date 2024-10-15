@@ -68,11 +68,19 @@ function MainGame(props) {
             setFound([
                 ...found, { name: charObj.name, id: charObj.id, x_coord: mouseCoord[0], y_coord: mouseCoord[1] }
             ])
-            const allFound = data.characters.length - 1 === found.length
-            props.setIsRunning(!allFound)
-            // alert(`You did it in ${props}`)
         }
 
+        gameOver()
+
+    }
+
+    function gameOver() {
+        const allFound = data.characters.length - 1 === found.length
+
+        if (allFound) {
+            props.setIsRunning(false)
+            alert(`You did it in ${props.seconds} seconds!`)
+        }
     }
 
     function verifyCoord(userCoord, charCoord) {

@@ -1,32 +1,30 @@
 import React, { useState, useEffect } from 'react';
 
-function Timer(props) {
-    const [seconds, setSeconds] = useState(0);
-
+function Timer({setStartGame, isRunning, setIsRunning, seconds, setSeconds}) {
     useEffect(() => {
         let interval;
-        if (props.isRunning) {
+        if (isRunning) {
             interval = setInterval(() => {
                 setSeconds(prevSeconds => prevSeconds + 1);
             }, 1000);
         }
 
         return () => clearInterval(interval);
-    }, [props.isRunning]);
+    }, [isRunning]);
 
     const startTimer = () => {
-        props.setIsRunning(true);
-        props.setStartGame(true)
+        setIsRunning(true);
+        setStartGame(true)
     };
 
-    // const stopTimer = () => {
-    //     setIsRunning(false);
-    // };
+    const stopTimer = () => {
+        setIsRunning(false);
+    };
 
-    // const resetTimer = () => {
-    //     setIsRunning(false);
-    //     setSeconds(0);
-    // };
+    const resetTimer = () => {
+        setIsRunning(false);
+        setSeconds(0);
+    };
 
     // console.log(props.allFound)
 
@@ -34,7 +32,6 @@ function Timer(props) {
         <div>
             <h1>{seconds}</h1>
             <button onClick={startTimer}>Start</button>
-            {props.allFound && console.log("lolol")}
             {/* <button onClick={stopTimer}>Stop</button>
             <button onClick={resetTimer}>Reset</button> */}
         </div>
