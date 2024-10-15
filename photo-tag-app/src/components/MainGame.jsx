@@ -5,7 +5,7 @@ import styles from './MainGame.module.css'
 const API_URL = "http://127.0.0.1:3000/api/pictures/1"
 const SQUARE_SIZE = .015
 
-function MainGame() {
+function MainGame(props) {
     const [mouseCoord, setMouseCoord] = useState()
     const [showDropdown, setShowDropdown] = useState(false); 
     const [bounds, setBounds] = useState();
@@ -63,12 +63,16 @@ function MainGame() {
         const userCoord = normalizedUserCoord()
         const charCoord = normalizeCharCoord(charObj)
         
-        console.log(verifyCoord(userCoord, charCoord))
+        // console.log(verifyCoord(userCoord, charCoord))
         if (verifyCoord(userCoord, charCoord)) {
             setFound([
                 ...found, { name: charObj.name, id: charObj.id, x_coord: mouseCoord[0], y_coord: mouseCoord[1] }
             ])
+            const allFound = data.characters.length - 1 === found.length
+            props.setIsRunning(!allFound)
+            // alert(`You did it in ${props}`)
         }
+
     }
 
     function verifyCoord(userCoord, charCoord) {
