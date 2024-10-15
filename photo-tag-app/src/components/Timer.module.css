@@ -1,0 +1,12 @@
+
+.timerDisplay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+}
+
+.btn {
+    width: 5rem;
+    height: 2rem;
+}

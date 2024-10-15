@@ -4,3 +4,9 @@
   padding: 2rem;
   text-align: center; */
 }
+
+h1 {
+  text-align: center;
+  padding: 0;
+  margin: .4rem;
+}

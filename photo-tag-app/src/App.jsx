@@ -12,9 +12,9 @@ function App() {
 
   return (
     <>
-    <h1>Welcome to Where's Waldo!</h1>
-    <Timer setStartGame={setStartGame} isRunning={isRunning} setIsRunning={setIsRunning} seconds={seconds} setSeconds={setSeconds} />
-    {startGame && <MainGame setIsRunning={setIsRunning} seconds={seconds}/>}
+      <h1>Welcome to Where's Waldo!</h1>
+      <Timer setStartGame={setStartGame} isRunning={isRunning} setIsRunning={setIsRunning} seconds={seconds} setSeconds={setSeconds} />
+      {startGame && <MainGame setIsRunning={setIsRunning} seconds={seconds}/>}
     </>
   )
 }

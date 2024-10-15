@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styles from './Timer.module.css'
 
 function Timer({setStartGame, isRunning, setIsRunning, seconds, setSeconds}) {
     useEffect(() => {
@@ -29,9 +30,9 @@ function Timer({setStartGame, isRunning, setIsRunning, seconds, setSeconds}) {
     // console.log(props.allFound)
 
     return (
-        <div>
+        <div className={styles.timerDisplay}>
             <h1>{seconds}</h1>
-            <button onClick={startTimer}>Start</button>
+            <button className={styles.btn} onClick={startTimer}>Start</button>
             {/* <button onClick={stopTimer}>Stop</button>
             <button onClick={resetTimer}>Reset</button> */}
         </div>
