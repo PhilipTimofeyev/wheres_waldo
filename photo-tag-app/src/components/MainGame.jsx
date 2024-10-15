@@ -56,6 +56,13 @@ function MainGame(props) {
         return userCoord
     }
 
+
+    useEffect(() => {
+        // This callback function will run whenever myArray changes
+        console.log("myArray has been updated:", found);
+        gameOver()
+    }, [found]);
+
     function handleSelection(e) {
         const charName = e.target.innerText
         const charObj = data.characters.find(char => char.name === charName)
@@ -65,17 +72,21 @@ function MainGame(props) {
         
         // console.log(verifyCoord(userCoord, charCoord))
         if (verifyCoord(userCoord, charCoord)) {
+            console.log("Hmm")
             setFound([
                 ...found, { name: charObj.name, id: charObj.id, x_coord: mouseCoord[0], y_coord: mouseCoord[1] }
             ])
         }
 
-        gameOver()
+
 
     }
 
     function gameOver() {
-        const allFound = data.characters.length - 1 === found.length
+        let allFound
+        if (data) {
+             allFound = data.characters.length === found.length
+        }
 
         if (allFound) {
             props.setIsRunning(false)
