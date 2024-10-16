@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :scores
   namespace :api do
     resources :pictures
   end
