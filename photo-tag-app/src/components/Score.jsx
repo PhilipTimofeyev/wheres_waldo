@@ -1,9 +1,12 @@
 
 import { React, useState, useEffect } from 'react'
 
-function Score({startGame}) {
+function Score({startGame, endGame}) {
     const [data, setData] = useState(null);
     const [scoreID, setScoreID] = useState()
+    const [duration, setDuration] = useState()
+
+
     const API_URL = "http://127.0.0.1:3000/api/scores"
     const UPDATE_URL = "http://127.0.0.1:3000/api/scores/1"
     
@@ -14,7 +17,12 @@ function Score({startGame}) {
 
     useEffect(() => {
         createScore()
+        // console.log("YAAAY")
     }, [startGame]);
+
+    useEffect(() => {
+        if (endGame) updateScore()
+    }, [endGame]);
 
     const createScore = async (event) => {
         const requestOptions = {
@@ -29,7 +37,6 @@ function Score({startGame}) {
                 throw new Error('Network response was not ok');
             }
             const responseData = await response.json();
-            setData(responseData);
             setScoreID(responseData.id)
         } catch (error) {
             console.error('Error:', error);
@@ -55,6 +62,8 @@ function Score({startGame}) {
             }
             const responseData = await response.json();
             setData(responseData);
+            setDuration(responseData.duration)
+            // console.log(responseData)
         } catch (error) {
             console.error('Error:', error);
         }
@@ -64,6 +73,7 @@ function Score({startGame}) {
     <div>
       <h1>SCORE</h1>
         {<button className='startBtn' onClick={updateScore}>Hmm</button>}
+        {duration && <h1>Solved in {duration} seconds!</h1>}
     </div>
   )
 

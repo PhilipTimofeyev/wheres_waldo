@@ -125,9 +125,9 @@ function MainGame({startGame}) {
 
   return (
     <div>
-        <Score startGame={startGame}/>
+        <Score startGame={startGame} endGame={endGame}/>
         {!finalTime && <Timer startGame={startGame} setFinalTime={setFinalTime} endGame={endGame} />}
-        {finalTime && <h1>You did it in {finalTime} seconds!</h1>}
+        {/* {finalTime && <h1>You did it in {finalTime} seconds!</h1>} */}
         {data && picture()}
         {showDropdown && dropdown()}
         {found && foundChars}

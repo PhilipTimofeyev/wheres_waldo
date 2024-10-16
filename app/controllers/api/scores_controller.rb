@@ -27,7 +27,8 @@ class Api::ScoresController < ApplicationController
   # PATCH/PUT /scores/1
   def update
     if @score.update(score_params)
-      render json: @score
+      seconds_to_solve = (Time.now - @score.created_at).seconds.round(2)
+      render json: { score: @score, duration: seconds_to_solve }
     else
       render json: @score.errors, status: :unprocessable_entity
     end
