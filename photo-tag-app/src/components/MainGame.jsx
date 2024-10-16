@@ -1,6 +1,7 @@
 import { React, useState, useEffect, useRef } from 'react'
 import Timer from './Timer';
 import Dropdown from './Dropdown';
+import Score from './Score';
 import styles from './MainGame.module.css'
 
 const API_URL = "http://127.0.0.1:3000/api/pictures/1"
@@ -124,6 +125,7 @@ function MainGame({startGame}) {
 
   return (
     <div>
+        <Score startGame={startGame}/>
         {!finalTime && <Timer startGame={startGame} setFinalTime={setFinalTime} endGame={endGame} />}
         {finalTime && <h1>You did it in {finalTime} seconds!</h1>}
         {data && picture()}

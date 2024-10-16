@@ -1,3 +1,3 @@
 class Score < ApplicationRecord
-  belongs_to :picture
+  # belongs_to :picture
 end
