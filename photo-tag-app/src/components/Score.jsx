@@ -7,7 +7,6 @@ function Score({startGame, endGame}) {
     const [scoreID, setScoreID] = useState()
     const [duration, setDuration] = useState()
 
-
     const API_URL = "http://127.0.0.1:3000/api/scores"
     const UPDATE_URL = "http://127.0.0.1:3000/api/scores/1"
     
@@ -39,6 +38,7 @@ function Score({startGame, endGame}) {
             }
             const responseData = await response.json();
             setScoreID(responseData.id)
+            console.log(`${responseData} here`)
         } catch (error) {
             console.error('Error:', error);
         }
@@ -75,7 +75,7 @@ function Score({startGame, endGame}) {
         <h1>SCORE</h1>
         {/* {<button className='startBtn' onClick={updateScore}>Hmm</button>} */}
         {duration && <h1>Solved in {duration} seconds!</h1>}
-        <ScoreForm scoreID={scoreID}/>
+        <ScoreForm scoreID={scoreID} endGame={endGame}/>
     </div>
   )
 

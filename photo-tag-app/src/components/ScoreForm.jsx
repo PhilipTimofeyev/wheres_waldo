@@ -1,9 +1,11 @@
 import { React, useState, useEffect } from 'react'
+import styles from './ScoreForm.module.css'
 
-function ScoreForm({scoreID}) {
+function ScoreForm({scoreID, endGame}) {
     const [data, setData] = useState(null);
+    const [showModal, setShowModal] = useState(false)
 
-    const updateScore = async (e) => {
+    const addHighScore = async (e) => {
         e.preventDefault()
         const formData = new FormData(e.target)
         const username = formData.get('username')
@@ -12,7 +14,6 @@ function ScoreForm({scoreID}) {
         const updateBody = {
             username: username,
         };
-
 
         const requestOptionsPatch = {
             method: 'PATCH',
@@ -31,18 +32,36 @@ function ScoreForm({scoreID}) {
         } catch (error) {
             console.error('Error:', error);
         }
+
+        setShowModal(false)
+    }
+
+    useEffect(() => {
+        if (endGame) setShowModal(true)
+    }, [endGame])
+
+    function modalForm() {
+        return (
+            <div className={styles.modal}>
+                <div className={styles.modalContent}>
+                    <h2>New High Score!</h2>
+                    <form method='post' onSubmit={addHighScore} className={styles.form}>
+                        <div>
+                            <label htmlFor="username">Name: </label>
+                            <input type="text" name="username" id="userNameInputField" />
+                            <br />
+                            <input type="submit" value="Submit" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        )
     }
 
     return (
-        <div>
-            <form method='post' onSubmit={updateScore}>
-                <label htmlFor="username">Name: </label>
-                <input type="text" name="username" id="userNameInputField" />
-                <br />
-                <input type="submit" value="Submit" />
-            </form>
-            
-        </div>
+        <>
+            {showModal && modalForm()}
+        </>
     )
 }
 
