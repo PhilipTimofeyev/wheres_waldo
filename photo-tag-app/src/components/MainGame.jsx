@@ -25,6 +25,7 @@ function MainGame({startGame}) {
             ).json();
 
             setData(data);
+            console.log(data)
         };
         dataFetch();
     }, []);

@@ -1,5 +1,6 @@
 
 import { React, useState, useEffect } from 'react'
+import ScoreForm from './ScoreForm';
 
 function Score({startGame, endGame}) {
     const [data, setData] = useState(null);
@@ -16,9 +17,9 @@ function Score({startGame, endGame}) {
     };
 
     useEffect(() => {
-        createScore()
-        // console.log("YAAAY")
-    }, [startGame]);
+        if (startGame) createScore()
+        console.log("HMMM")
+    }, []);
 
     useEffect(() => {
         if (endGame) updateScore()
@@ -71,9 +72,10 @@ function Score({startGame, endGame}) {
 
   return (
     <div>
-      <h1>SCORE</h1>
-        {<button className='startBtn' onClick={updateScore}>Hmm</button>}
+        <h1>SCORE</h1>
+        {/* {<button className='startBtn' onClick={updateScore}>Hmm</button>} */}
         {duration && <h1>Solved in {duration} seconds!</h1>}
+        <ScoreForm scoreID={scoreID}/>
     </div>
   )
 
