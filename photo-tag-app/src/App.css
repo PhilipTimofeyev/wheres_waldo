@@ -15,3 +15,7 @@ h1 {
   display: flex;
   margin: auto;
 }
+
+img {
+  width: 20vw;
+}

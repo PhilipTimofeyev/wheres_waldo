@@ -16,9 +16,11 @@ function Score({startGame, endGame}) {
     };
 
     useEffect(() => {
-        if (startGame) createScore()
-        console.log("HMMM")
-    }, []);
+        if (startGame) {
+            createScore()
+            console.log("HMMM")
+        }
+    }, [startGame]);
 
     useEffect(() => {
         if (endGame) updateScore()
@@ -72,8 +74,7 @@ function Score({startGame, endGame}) {
 
   return (
     <div>
-        <h1>SCORE</h1>
-        {/* {<button className='startBtn' onClick={updateScore}>Hmm</button>} */}
+        <h1>Time</h1>
         {duration && <h1>Solved in {duration} seconds!</h1>}
         <ScoreForm scoreID={scoreID} endGame={endGame}/>
     </div>

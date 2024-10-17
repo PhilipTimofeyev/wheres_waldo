@@ -4,19 +4,22 @@ import Dropdown from './Dropdown';
 import Score from './Score';
 import styles from './MainGame.module.css'
 
-const API_URL = "http://127.0.0.1:3000/api/pictures/1"
 const SQUARE_SIZE = .015
 
-function MainGame({startGame}) {
+function MainGame({startGame, level}) {
     const [mouseCoord, setMouseCoord] = useState()
     const [showDropdown, setShowDropdown] = useState(false); 
     const [data, setData] = useState();
     const [found, setFound] = useState([])
     const [finalTime, setFinalTime] = useState()
     const [endGame, setEndGame] = useState()
+    const [startRound, setStartRound] = useState(false)
     const bounds = useRef()
 
+    console.log(data)
+
     useEffect(() => {
+        const API_URL = `http://127.0.0.1:3000/api/pictures/${level.id}`
         const dataFetch = async () => {
             const data = await (
                 await fetch(
@@ -126,6 +129,7 @@ function MainGame({startGame}) {
 
   return (
     <div>
+          {/* {<button className='startBtn' onClick={dataFetch}>Start Round</button>} */}
         <Score startGame={startGame} endGame={endGame}/>
         {!finalTime && <Timer startGame={startGame} setFinalTime={setFinalTime} endGame={endGame} />}
         {/* {finalTime && <h1>You did it in {finalTime} seconds!</h1>} */}
