@@ -6,6 +6,7 @@ import { ScoreContext } from '../App';
 function Score({startGame, gameOver}) {
     const [data, setData] = useState(null);
     const [allScores, setAllScores] = useState()
+    const [userScore, setUserScore] = useState()
     const scoreQuery = useContext(ScoreContext)
 
     const API_SCORE_URL = "http://127.0.0.1:3000/api/scores"
@@ -48,7 +49,8 @@ function Score({startGame, gameOver}) {
                 throw new Error('Network response was not ok');
             }
             const responseData = await response.json();
-            setData(responseData);
+            setUserScore(responseData);
+            console.log(responseData)
         } catch (error) {
             console.error('Error:', error);
         }
@@ -56,7 +58,7 @@ function Score({startGame, gameOver}) {
 
   return (
     <div>
-        {allScores && <ScoreForm gameOver={gameOver} scoreQuery={scoreQuery} allScores={allScores}/>}
+          {allScores && userScore && <ScoreForm gameOver={gameOver} scoreQuery={scoreQuery} allScores={allScores} userScore={userScore.score}/>}
     </div>
   )
 

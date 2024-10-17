@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react'
 import styles from './ScoreForm.module.css'
 
-function ScoreForm({gameOver, scoreQuery, allScores}) {
+function ScoreForm({gameOver, scoreQuery, allScores, userScore}) {
     const [showModal, setShowModal] = useState(true)
 
     const addHighScore = async(e) => {
@@ -46,7 +46,7 @@ function ScoreForm({gameOver, scoreQuery, allScores}) {
         return (
             <div className={styles.modal}>
                 <div className={styles.modalContent}>
-                    {/* <h2>You solved in {scoreQuery.score}</h2> */}
+                    <h2>You solved it in {userScore} seconds!</h2>
                     <h2>New High Score!</h2>
                     <div className={styles.table}>
                         <table>
