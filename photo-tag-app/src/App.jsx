@@ -51,7 +51,7 @@ function App() {
   return (
     <>
       {!startGame && <h1>Welcome to Where's Waldo!</h1>}
-      {!startGame && <h2>Please select a level!</h2>}
+      {!startGame && <h2>Please select a level:</h2>}
       <div className='levelsGrid'>
         {!startGame && allPictures && showPictureThumbnails()}
       </div>

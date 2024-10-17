@@ -5,7 +5,6 @@ import ScoreForm from './ScoreForm';
 function Score({startGame, endGame}) {
     const [data, setData] = useState(null);
     const [scoreID, setScoreID] = useState()
-    const [duration, setDuration] = useState()
 
     const API_URL = "http://127.0.0.1:3000/api/scores"
     const UPDATE_URL = "http://127.0.0.1:3000/api/scores/1"
@@ -61,7 +60,6 @@ function Score({startGame, endGame}) {
             }
             const responseData = await response.json();
             setData(responseData);
-            setDuration(responseData.duration)
         } catch (error) {
             console.error('Error:', error);
         }
@@ -69,7 +67,7 @@ function Score({startGame, endGame}) {
 
   return (
     <div>
-        {duration && <h1>Solved in {duration} seconds!</h1>}
+        {data && <h1>Solved in {data.score} seconds!</h1>}
         <ScoreForm scoreID={scoreID} endGame={endGame}/>
     </div>
   )
