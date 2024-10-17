@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Timer.module.css'
 
-function Timer({startGame, setFinalTime, endGame}) {
+function Timer({startGame, setFinalTime, gameOver}) {
     const [isRunning, setIsRunning] = useState(false);
     const [seconds, setSeconds] = useState(0);
 
@@ -17,13 +17,13 @@ function Timer({startGame, setFinalTime, endGame}) {
     }, [isRunning]);
 
     useEffect(() => {
-        if (endGame) {
+        if (gameOver) {
             stopTimer()
             setFinalTime(seconds)
         } else if (startGame) {
             startTimer()
         }
-    }, [endGame])
+    }, [gameOver])
 
     const startTimer = () => {
         setIsRunning(true);

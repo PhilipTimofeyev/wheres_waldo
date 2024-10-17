@@ -1,10 +1,10 @@
 import { React, useState, useEffect } from 'react'
 import styles from './ScoreForm.module.css'
 
-function ScoreForm({gameOver, scoreQuery}) {
-    const [showModal, setShowModal] = useState(false)
+function ScoreForm({gameOver, scoreQuery, allScores}) {
+    const [showModal, setShowModal] = useState(true)
 
-    const addHighScore = async (e) => {
+    const addHighScore = async(e) => {
         e.preventDefault()
         const formData = new FormData(e.target)
         const username = formData.get('username')
@@ -32,15 +32,34 @@ function ScoreForm({gameOver, scoreQuery}) {
         setShowModal(false)
     }
 
-    useEffect(() => {
-        gameOver ? setShowModal(true) : setShowModal(false)
-    }, [gameOver])
+    const topScores = allScores.slice(0, 5).map((score, idx) =>
+        <tbody key={score.id}>
+            <tr>
+                    <td>{idx + 1}</td>
+                    <td>{score.username}</td>
+                    <td>{score.score}</td>
+            </tr>
+        </tbody>
+    )
 
     function modalForm() {
         return (
             <div className={styles.modal}>
                 <div className={styles.modalContent}>
+                    {/* <h2>You solved in {scoreQuery.score}</h2> */}
                     <h2>New High Score!</h2>
+                    <div className={styles.table}>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th><u>Rank</u></th>
+                                <th><u>Username</u></th>
+                                <th><u>Score (sec)</u></th>
+                            </tr>
+                            </thead>
+                            {topScores}
+                        </table>
+                    </div>
                     <form method='post' onSubmit={addHighScore} className={styles.form}>
                         <div>
                             <label htmlFor="username">Name: </label>
@@ -57,6 +76,7 @@ function ScoreForm({gameOver, scoreQuery}) {
     return (
         <>
             {showModal && modalForm()}
+            
         </>
     )
 }

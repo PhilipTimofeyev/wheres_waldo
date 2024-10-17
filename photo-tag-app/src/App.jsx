@@ -46,7 +46,6 @@ function App() {
   }
 
   function startLevel(level) {
-    console.log(level)
     setSelectedLevel(level)
     setStartGame(true)
     createScore(level)
