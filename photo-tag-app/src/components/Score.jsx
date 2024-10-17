@@ -16,17 +16,14 @@ function Score({startGame, endGame}) {
     };
 
     useEffect(() => {
-        if (startGame) {
-            createScore()
-            console.log("HMMM")
-        }
-    }, [startGame]);
+        createScore()
+    }, []);
 
     useEffect(() => {
         if (endGame) updateScore()
     }, [endGame]);
 
-    const createScore = async (event) => {
+    async function createScore() {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -40,18 +37,17 @@ function Score({startGame, endGame}) {
             }
             const responseData = await response.json();
             setScoreID(responseData.id)
-            console.log(`${responseData} here`)
         } catch (error) {
             console.error('Error:', error);
         }
-    }
+    } 
+
 
     const updateBody = {
         username: 'update score',
     };
 
-    const updateScore = async (event) => {
-        console.log(scoreID)
+    const updateScore = async () => {
         const requestOptionsPatch = {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
@@ -66,7 +62,6 @@ function Score({startGame, endGame}) {
             const responseData = await response.json();
             setData(responseData);
             setDuration(responseData.duration)
-            // console.log(responseData)
         } catch (error) {
             console.error('Error:', error);
         }
@@ -74,7 +69,6 @@ function Score({startGame, endGame}) {
 
   return (
     <div>
-        <h1>Time</h1>
         {duration && <h1>Solved in {duration} seconds!</h1>}
         <ScoreForm scoreID={scoreID} endGame={endGame}/>
     </div>

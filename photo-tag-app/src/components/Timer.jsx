@@ -40,7 +40,7 @@ function Timer({startGame, setFinalTime, endGame}) {
 
     return (
         <div className={styles.timerDisplay}>
-            <h1>{seconds}</h1>
+            <h1>Timer: {seconds}</h1>
         </div>
     );
 }

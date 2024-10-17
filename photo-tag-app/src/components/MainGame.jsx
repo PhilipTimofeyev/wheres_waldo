@@ -16,8 +16,6 @@ function MainGame({startGame, level}) {
     const [startRound, setStartRound] = useState(false)
     const bounds = useRef()
 
-    console.log(data)
-
     useEffect(() => {
         const API_URL = `http://127.0.0.1:3000/api/pictures/${level.id}`
         const dataFetch = async () => {

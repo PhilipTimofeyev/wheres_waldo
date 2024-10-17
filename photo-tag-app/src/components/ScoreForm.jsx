@@ -9,7 +9,6 @@ function ScoreForm({scoreID, endGame}) {
         e.preventDefault()
         const formData = new FormData(e.target)
         const username = formData.get('username')
-        console.log(scoreID)
 
         const updateBody = {
             username: username,
@@ -28,7 +27,6 @@ function ScoreForm({scoreID, endGame}) {
             }
             const responseData = await response.json();
             setData(responseData);
-            // console.log(responseData)
         } catch (error) {
             console.error('Error:', error);
         }
