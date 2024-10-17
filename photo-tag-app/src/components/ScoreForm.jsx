@@ -35,12 +35,18 @@ function ScoreForm({gameOver, scoreQuery, allScores, userScore}) {
     const topScores = allScores.slice(0, 5).map((score, idx) =>
         <tbody key={score.id}>
             <tr>
-                    <td>{idx + 1}</td>
-                    <td>{score.username}</td>
-                    <td>{score.score}</td>
+                <td>{idx + 1}</td>
+                <td>{score.username}</td>
+                <td>{score.score}</td>
             </tr>
         </tbody>
     )
+
+    function checkIfHighScore() {
+        
+    }
+
+    checkIfHighScore()
 
     function modalForm() {
         return (

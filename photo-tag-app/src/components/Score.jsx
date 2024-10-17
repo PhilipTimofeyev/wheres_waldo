@@ -15,7 +15,6 @@ function Score({startGame, gameOver}) {
     useEffect(() => {
         if (gameOver) {
             updateScore()
-            getAllScores()
         }
     }, [gameOver]);
 
@@ -33,7 +32,7 @@ function Score({startGame, gameOver}) {
     }
 
     const updateBody = {
-        username: 'anonymous',
+        username: '[Your Name]',
     };
 
     const updateScore = async () => {
@@ -50,7 +49,7 @@ function Score({startGame, gameOver}) {
             }
             const responseData = await response.json();
             setUserScore(responseData);
-            console.log(responseData)
+            getAllScores()
         } catch (error) {
             console.error('Error:', error);
         }
