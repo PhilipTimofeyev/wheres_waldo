@@ -10,6 +10,7 @@ function App() {
   const [selectedLevel, setSelectedLevel] = useState();
   const [currentScore, setCurrentScore] = useState()
 
+  const API_PICTURES_URL = "http://127.0.0.1:3000/api/pictures"
   const API_SCORE_URL = "http://127.0.0.1:3000/api/scores"
 
   function beginGame() {
@@ -17,13 +18,10 @@ function App() {
   }
 
   useEffect(() => {
-    const API_URL = "http://127.0.0.1:3000/api/pictures"
 
     const dataFetch = async () => {
       const data = await (
-        await fetch(
-          API_URL,
-        )
+        await fetch(API_PICTURES_URL)
       ).json();
 
       setAllPictures(data);
@@ -34,28 +32,30 @@ function App() {
   function showPictureThumbnails() {
     return (
       allPictures.map(picture =>
-          <li key={picture.id}>
-            <div className='levelTiles'>
+        <li key={picture.id}>
+          <div className='levelTiles'>
             <img
               onClick={() => startLevel(picture)}
               src={picture.image}
             />
             <h3>{picture.title}</h3>
-      </div>
-          </li>
+          </div>
+        </li>
+      )
     )
-  )}
-
-  function startLevel(level) {
-    setSelectedLevel(level)
-    setStartGame(true)
-    createScore()
   }
 
-  async function createScore() {
+  function startLevel(level) {
+    console.log(level)
+    setSelectedLevel(level)
+    setStartGame(true)
+    createScore(level)
+  }
+
+  async function createScore(level) {
     const postBody = {
-      username: 'test score',
-      picture_id: 1
+      username: 'Anonymous',
+      picture_id: level.id
     };
 
     const requestOptions = {
@@ -76,7 +76,6 @@ function App() {
     }
   } 
   
-
   return (
     <>
       {!startGame && <h1>Welcome to Where's Waldo!</h1>}
