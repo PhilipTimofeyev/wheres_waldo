@@ -30,13 +30,15 @@ function App() {
   function showPictureThumbnails() {
     return (
       allPictures.map(picture =>
-      <li key={picture.id}>
-        <img
-          onClick={() => selectLevel(picture)}
-          src={picture.image}
-        />
-        <h3>{picture.title}</h3>
-      </li>
+          <li key={picture.id}>
+            <div className='levelTiles'>
+            <img
+              onClick={() => selectLevel(picture)}
+              src={picture.image}
+            />
+            <h3>{picture.title}</h3>
+      </div>
+          </li>
     )
   )}
 
@@ -50,7 +52,9 @@ function App() {
     <>
       {!startGame && <h1>Welcome to Where's Waldo!</h1>}
       {!startGame && <h2>Please select a level!</h2>}
-      {!startGame && allPictures && showPictureThumbnails()}
+      <div className='levelsGrid'>
+        {!startGame && allPictures && showPictureThumbnails()}
+      </div>
       {startGame && <MainGame startGame={startGame} level={selectedLevel}/>}
     </>
   )

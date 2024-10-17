@@ -28,7 +28,6 @@ function MainGame({startGame, level}) {
             ).json();
 
             setData(data);
-            console.log(data)
         };
         dataFetch();
     }, []);
