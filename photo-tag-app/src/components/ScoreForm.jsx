@@ -1,8 +1,7 @@
 import { React, useState, useEffect } from 'react'
 import styles from './ScoreForm.module.css'
 
-function ScoreForm({scoreID, endGame}) {
-    const [data, setData] = useState(null);
+function ScoreForm({scoreID, gameOver}) {
     const [showModal, setShowModal] = useState(false)
 
     const addHighScore = async (e) => {
@@ -26,7 +25,6 @@ function ScoreForm({scoreID, endGame}) {
                 throw new Error('Network response was not ok');
             }
             const responseData = await response.json();
-            setData(responseData);
         } catch (error) {
             console.error('Error:', error);
         }
@@ -35,8 +33,8 @@ function ScoreForm({scoreID, endGame}) {
     }
 
     useEffect(() => {
-        if (endGame) setShowModal(true)
-    }, [endGame])
+        if (gameOver) setShowModal(true)
+    }, [gameOver])
 
     function modalForm() {
         return (
@@ -58,7 +56,7 @@ function ScoreForm({scoreID, endGame}) {
 
     return (
         <>
-            {showModal && modalForm()}
+            {gameOver && modalForm()}
         </>
     )
 }

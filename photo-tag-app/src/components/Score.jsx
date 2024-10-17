@@ -2,7 +2,7 @@
 import { React, useState, useEffect } from 'react'
 import ScoreForm from './ScoreForm';
 
-function Score({startGame, endGame}) {
+function Score({startGame, gameOver}) {
     const [data, setData] = useState(null);
     const [scoreID, setScoreID] = useState()
 
@@ -19,8 +19,8 @@ function Score({startGame, endGame}) {
     }, []);
 
     useEffect(() => {
-        if (endGame) updateScore()
-    }, [endGame]);
+        if (gameOver) updateScore()
+    }, [gameOver]);
 
     async function createScore() {
         const requestOptions = {
@@ -68,7 +68,7 @@ function Score({startGame, endGame}) {
   return (
     <div>
         {data && <h1>Solved in {data.score} seconds!</h1>}
-        <ScoreForm scoreID={scoreID} endGame={endGame}/>
+        <ScoreForm scoreID={scoreID} gameOver={gameOver}/>
     </div>
   )
 

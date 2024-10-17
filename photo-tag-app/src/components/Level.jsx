@@ -4,7 +4,7 @@ import styles from './MainGame.module.css'
 
 const SQUARE_SIZE = .015
 
-function Level({level, setFound, found, setEndGame}) {
+function Level({level, setFound, found, setGameOver}) {
     const [data, setData] = useState();
     const [mouseCoord, setMouseCoord] = useState()
     const [showDropdown, setShowDropdown] = useState(false); 
@@ -105,7 +105,7 @@ function Level({level, setFound, found, setEndGame}) {
         if (data) {
             allFound = data.characters.length === found.length
         }
-        if (allFound) setEndGame(true)
+        if (allFound) setGameOver(true)
     }
 
     const foundChars = found.map(char => {
