@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useRef } from 'react'
+import { React, useState, useEffect, useRef, useContext } from 'react'
 import Level from './Level';
 import Timer from './Timer';
 import Score from './Score';
@@ -10,7 +10,6 @@ function MainGame({startGame, level}) {
     const [gameOver, setGameOver] = useState()
     const [startRound, setStartRound] = useState(false)
     const [found, setFound] = useState([])
-    console.log(level)
 
 
 

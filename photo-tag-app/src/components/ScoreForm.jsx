@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from 'react'
 import styles from './ScoreForm.module.css'
 
-function ScoreForm({scoreID, gameOver}) {
+function ScoreForm({gameOver, scoreQuery}) {
     const [showModal, setShowModal] = useState(false)
 
     const addHighScore = async (e) => {
@@ -20,7 +20,7 @@ function ScoreForm({scoreID, gameOver}) {
         };
 
         try {
-            const response = await fetch(`http://127.0.0.1:3000/api/scores/${scoreID}`, requestOptionsPatch);
+            const response = await fetch(`http://127.0.0.1:3000/api/scores/${scoreQuery.id}`, requestOptionsPatch);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -33,7 +33,7 @@ function ScoreForm({scoreID, gameOver}) {
     }
 
     useEffect(() => {
-        if (gameOver) setShowModal(true)
+        gameOver ? setShowModal(true) : setShowModal(false)
     }, [gameOver])
 
     function modalForm() {
@@ -56,7 +56,7 @@ function ScoreForm({scoreID, gameOver}) {
 
     return (
         <>
-            {gameOver && modalForm()}
+            {showModal && modalForm()}
         </>
     )
 }
