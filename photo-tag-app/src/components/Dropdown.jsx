@@ -17,11 +17,11 @@ function Dropdown(props) {
     })
 
     return (
-        <div className={styles.dropdown} style={{ width: props.bounds.width * DROPDOWN_SIZE }}>
-            <ul className={styles.characterList}>
-                {characterList}
-            </ul>
-        </div>
+            <div className={styles.dropdown} style={{ width: props.bounds.width * DROPDOWN_SIZE }}>
+                <ul className={styles.characterList}>
+                    {characterList}
+                </ul>
+            </div>
     )
 }
 

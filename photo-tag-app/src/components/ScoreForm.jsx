@@ -51,7 +51,7 @@ function ScoreForm({gameOver, scoreQuery, userScore, setUserScore}) {
         getAllScores()
     }, [gameOver, userScore])
 
-    function handleClick() {
+    function closeModal() {
         setShowModal(false)
     }
 
@@ -70,7 +70,7 @@ function ScoreForm({gameOver, scoreQuery, userScore, setUserScore}) {
                             <input type="submit" value="Submit" />
                         </div>
                     </form>
-                    <button onClick={handleClick}>Close</button>
+                    <button onClick={closeModal}>Close</button>
                 </div>
             </div>
         )

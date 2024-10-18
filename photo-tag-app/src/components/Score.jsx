@@ -15,15 +15,14 @@ function Score({startGame, gameOver}) {
     useEffect(() => {
         if (gameOver) {
             updateScore()
-            console.log("Score updating")
         }
     }, [gameOver]);
 
-    const updateBody = {
-        username: '[Your Name]',
-    };
-
     const updateScore = async () => {
+        const updateBody = {
+            username: '[Your Name]',
+        };
+
         const requestOptionsPatch = {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
@@ -37,7 +36,6 @@ function Score({startGame, gameOver}) {
             }
             const responseData = await response.json();
             setUserScore(responseData);
-            // getAllScores()
         } catch (error) {
             console.error('Error:', error);
         }

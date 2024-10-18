@@ -30,21 +30,6 @@ function Level({level, setFound, found, setGameOver}) {
         bounds.current = e.target.getBoundingClientRect()
     }
 
-    function picture() {
-        return (
-            <img onClick={handleClick} className={styles.gameImage} src={data.picture.image} />
-        )
-    }
-
-    function dropdown() {
-        return (
-            <>
-                <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}><Dropdown handleSelection={handleSelection} characters={data.characters} bounds={bounds.current} found={found} /></div>
-                <div className={styles.targetSquare} style={{ left: mouseCoord[0], top: mouseCoord[1], width: bounds.current.width * SQUARE_SIZE, height: bounds.current.width * SQUARE_SIZE, borderWidth: bounds.current.width * .003 }}></div>
-            </>
-        )
-    }
-
     function normalizeCharCoord(character) {
         // calculates ratio of character position relative to the image size
         const x_perc = character.x_coord / data.picture.image_width
@@ -101,7 +86,6 @@ function Level({level, setFound, found, setGameOver}) {
 
     function gameOver() {
         let allFound
-        console.log(data)
         if (data) {
             allFound = data.characters.length === found.length
         }
@@ -116,11 +100,32 @@ function Level({level, setFound, found, setGameOver}) {
 
   return (
     <div>
-        {data && picture()}
-        {showDropdown && dropdown()}
+        {/* {data && picture()} */}
+        {data && <Picture handleClick={handleClick} data={data}/>}
+        {showDropdown && 
+        <>
+            <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}>
+                <Dropdown handleSelection={handleSelection} characters={data.characters} bounds={bounds.current} found={found} mouseCoord={mouseCoord} />
+                <TargetSquare bounds={bounds}/>
+            </div>
+        </>
+        }
         {found && foundChars}
     </div>
   )
 }
+
+function Picture({handleClick, data}) {
+    return (
+        <img onClick={handleClick} className={styles.gameImage} src={data.picture.image} />
+    )
+}
+
+function TargetSquare({bounds}) {
+    return (
+        <div className={styles.targetSquare} style={{ width: bounds.current.width * SQUARE_SIZE, height: bounds.current.width * SQUARE_SIZE, borderWidth: bounds.current.width * .003 }}></div>
+    )
+}
+
 
 export default Level
