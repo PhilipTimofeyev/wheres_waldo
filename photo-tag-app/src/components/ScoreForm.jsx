@@ -4,7 +4,6 @@ import styles from './ScoreForm.module.css'
 function ScoreForm({gameOver, scoreQuery, userScore, setUserScore}) {
     const [showModal, setShowModal] = useState(true)
     const [allScores, setAllScores] = useState(false)
-    const [isHighScore, setIsHighScore] = useState(false)
 
     const addHighScore = async(e) => {
         e.preventDefault()
@@ -52,46 +51,17 @@ function ScoreForm({gameOver, scoreQuery, userScore, setUserScore}) {
         getAllScores()
     }, [gameOver, userScore])
 
-    function checkIfHighScore() {
-        return !allScores.some((score) => {
-            return score.score < userScore.score
-        })
-    }
-
     function handleClick() {
         setShowModal(false)
     }
 
     function ModalForm() {
-        console.log(checkIfHighScore())
-
-        const topScores = allScores.slice(0, 5).map((score, idx) =>
-            <tbody key={score.id}>
-                <tr>
-                    <td>{idx + 1}</td>
-                    <td>{score.username}</td>
-                    <td>{score.score}</td>
-                </tr>
-            </tbody>
-        )
 
         return (
             <div className={styles.modal}>
                 <div className={styles.modalContent}>
                     <h2>You solved it in {userScore.score} seconds!</h2>
-                    {checkIfHighScore() && <h2>New High Score!</h2>}
-                    <div className={styles.table}>
-                        <table>
-                            <thead>
-                            <tr>
-                                <th><u>Rank</u></th>
-                                <th><u>Username</u></th>
-                                <th><u>Score (sec)</u></th>
-                            </tr>
-                            </thead>
-                            {topScores}
-                        </table>
-                    </div>
+                    <HighScores allScores={allScores} userScore={userScore}/>
                     <form method='post' onSubmit={addHighScore} className={styles.form}>
                         <div>
                             <label htmlFor="username">Name: </label>
@@ -109,9 +79,46 @@ function ScoreForm({gameOver, scoreQuery, userScore, setUserScore}) {
     return (
         <>
             {showModal && allScores && <ModalForm/>}
-            
         </>
     )
 }
+
+function HighScores({allScores, userScore}) {
+
+    function checkIfHighScore() {
+        return !allScores.some((score) => {
+            return score.score < userScore.score
+        })
+    }
+
+    const topScores = allScores.slice(0, 5).map((score, idx) =>
+        <tbody key={score.id}>
+            <tr>
+                <td>{idx + 1}</td>
+                <td>{score.username}</td>
+                <td>{score.score}</td>
+            </tr>
+        </tbody>
+    )
+
+    return (
+        <>
+        {checkIfHighScore() && <h2>New High Score!</h2>}
+        <div className={styles.table}>
+            <table>
+                <thead>
+                    <tr>
+                        <th><u>Rank</u></th>
+                        <th><u>Username</u></th>
+                        <th><u>Score (sec)</u></th>
+                    </tr>
+                </thead>
+                {topScores}
+            </table>
+        </div>
+        </>
+    )
+}
+
 
 export default ScoreForm
