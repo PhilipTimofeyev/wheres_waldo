@@ -4,6 +4,7 @@ import styles from './ScoreForm.module.css'
 function ScoreForm({gameOver, scoreQuery, userScore, setUserScore}) {
     const [showModal, setShowModal] = useState(true)
     const [allScores, setAllScores] = useState(false)
+    const [showForm, setShowForm] = useState(false)
 
     const addHighScore = async(e) => {
         e.preventDefault()
@@ -36,10 +37,6 @@ function ScoreForm({gameOver, scoreQuery, userScore, setUserScore}) {
     const getAllScores = async () => {
         const API_SCORE_URL = "http://127.0.0.1:3000/api/scores"
 
-        const params = {
-            param1: 'value1',
-        };
-
         try {
             const response = await fetch(`${API_SCORE_URL}?picture_id=${scoreQuery.picture_id}`)
             if (!response.ok) {
@@ -66,15 +63,19 @@ function ScoreForm({gameOver, scoreQuery, userScore, setUserScore}) {
             <div className={styles.modal}>
                 <div className={styles.modalContent}>
                     <h2>You solved it in {userScore.score} seconds!</h2>
-                    <HighScores allScores={allScores} userScore={userScore}/>
-                    <form method='post' onSubmit={addHighScore} className={styles.form}>
-                        <div>
-                            <label htmlFor="username">Name: </label>
-                            <input type="text" name="username" id="userNameInputField" />
-                            <br />
-                            <input type="submit" value="Submit" />
-                        </div>
-                    </form>
+                    <HighScores allScores={allScores} userScore={userScore} setShowForm={setShowForm}/>
+                    {showForm &&
+                    <>
+                        <form method='post' onSubmit={addHighScore} className={styles.form}>
+                            <div>
+                                <label htmlFor="username">Name: </label>
+                                <input type="text" name="username" id="userNameInputField" />
+                                <br />
+                                <input type="submit" value="Submit" />
+                            </div>
+                        </form>
+                    </>
+                    }
                     <button onClick={closeModal}>Close</button>
                 </div>
             </div>
@@ -88,13 +89,28 @@ function ScoreForm({gameOver, scoreQuery, userScore, setUserScore}) {
     )
 }
 
-function HighScores({allScores, userScore}) {
+function HighScores({allScores, userScore, setShowForm}) {
+
+    const [isHighScore, setIsHighScore] = useState(false)
+    const [isTopFive, setIsTopFive] = useState(false)
 
     function checkIfHighScore() {
-        return !allScores.some((score) => {
-            return score.score < userScore.score
-        })
+        // Checks if score is top 5 or highest
+
+        if (!allScores.slice(0, 5).every(score => score.score > userScore.score)) {
+            setShowForm(true)
+            return setIsHighScore(true)
+        }
+        
+        if (allScores.slice(0, 5).at(-1).score > userScore.score || allScores.length < 6) {
+            setShowForm(true)
+            return setIsTopFive(true)
+        }
     }
+
+    useEffect(() => {
+        checkIfHighScore()
+    }, [userScore])
 
     const topScores = allScores.slice(0, 5).map((score, idx) =>
         <tbody key={score.id}>
@@ -108,19 +124,20 @@ function HighScores({allScores, userScore}) {
 
     return (
         <>
-        {checkIfHighScore() && <h2>New High Score!</h2>}
-        <div className={styles.table}>
-            <table>
-                <thead>
-                    <tr>
-                        <th><u>Rank</u></th>
-                        <th><u>Username</u></th>
-                        <th><u>Score (sec)</u></th>
-                    </tr>
-                </thead>
-                {topScores}
-            </table>
-        </div>
+            {isHighScore && <h2>New High Score!</h2>}
+            {isTopFive && <h2>You're in the Top Five!</h2>}
+            <div className={styles.table}>
+                <table>
+                    <thead>
+                        <tr>
+                            <th><u>Rank</u></th>
+                            <th><u>Username</u></th>
+                            <th><u>Score (sec)</u></th>
+                        </tr>
+                    </thead>
+                    {topScores}
+                </table>
+            </div>
         </>
     )
 }
