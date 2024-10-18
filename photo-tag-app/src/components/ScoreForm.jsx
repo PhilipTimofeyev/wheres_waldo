@@ -33,6 +33,18 @@ function ScoreForm({gameOver, scoreQuery, userScore, setUserScore}) {
         }
     }
 
+    const removeScore = async() => {
+        try {
+            const response = await fetch(`http://127.0.0.1:3000/api/scores/${userScore.id}`, {method: 'DELETE'});
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const responseData = await response.json();
+            console.log(responseData)
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
 
     const getAllScores = async () => {
         const API_SCORE_URL = "http://127.0.0.1:3000/api/scores"
@@ -55,6 +67,7 @@ function ScoreForm({gameOver, scoreQuery, userScore, setUserScore}) {
 
     function closeModal() {
         setShowModal(false)
+        // removeScore()
     }
 
     function ModalForm() {
@@ -112,8 +125,8 @@ function HighScores({allScores, userScore, setShowForm}) {
     }, [userScore])
 
     const topScores = allScores.slice(0, 5).map((score, idx) => {
-        let color
-        score.id === userScore.id ? color = 'red' : color = ''
+        let color = ''
+        if (score.id === userScore.id) color = 'red'
         return (
             <tbody key={score.id}>
                 <tr style={{color: color}}>
