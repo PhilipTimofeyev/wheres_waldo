@@ -92,26 +92,17 @@ function Level({level, setFound, found, setGameOver}) {
         if (allFound) setGameOver(true)
     }
 
-    const foundChars = found.map(char => {
-        return < div key={char.id} className={styles.foundSquare} style={{ left: char.x_coord, top: char.y_coord, width: bounds.current.width * SQUARE_SIZE, height: bounds.current.width * SQUARE_SIZE, borderWidth: bounds.current.width * .003 }}></div >
-    })
-    
-
-
   return (
-    <div>
-        {/* {data && picture()} */}
+    <>
         {data && <Picture handleClick={handleClick} data={data}/>}
         {showDropdown && 
-        <>
             <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}>
                 <Dropdown handleSelection={handleSelection} characters={data.characters} bounds={bounds.current} found={found} mouseCoord={mouseCoord} />
                 <TargetSquare bounds={bounds}/>
             </div>
-        </>
         }
-        {found && foundChars}
-    </div>
+        {found && <MarkFound found={found} bounds={bounds}/>}
+    </>
   )
 }
 
@@ -124,6 +115,14 @@ function Picture({handleClick, data}) {
 function TargetSquare({bounds}) {
     return (
         <div className={styles.targetSquare} style={{ width: bounds.current.width * SQUARE_SIZE, height: bounds.current.width * SQUARE_SIZE, borderWidth: bounds.current.width * .003 }}></div>
+    )
+}
+
+function MarkFound({found, bounds}) {
+    return (
+        found.map(char => {
+            return < div key={char.id} className={styles.foundSquare} style={{ left: char.x_coord, top: char.y_coord, width: bounds.current.width * SQUARE_SIZE, height: bounds.current.width * SQUARE_SIZE, borderWidth: bounds.current.width * .003 }}></div >
+        })
     )
 }
 
