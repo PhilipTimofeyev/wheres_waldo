@@ -15,21 +15,9 @@ function Score({startGame, gameOver}) {
     useEffect(() => {
         if (gameOver) {
             updateScore()
+            console.log("Score updating")
         }
     }, [gameOver]);
-
-    const getAllScores = async () => {
-        try {
-            const response = await fetch(API_SCORE_URL)
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const responseData = await response.json();
-            setAllScores(responseData)
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    }
 
     const updateBody = {
         username: '[Your Name]',
@@ -49,7 +37,7 @@ function Score({startGame, gameOver}) {
             }
             const responseData = await response.json();
             setUserScore(responseData);
-            getAllScores()
+            // getAllScores()
         } catch (error) {
             console.error('Error:', error);
         }
@@ -57,7 +45,7 @@ function Score({startGame, gameOver}) {
 
   return (
     <div>
-          {allScores && userScore && <ScoreForm gameOver={gameOver} scoreQuery={scoreQuery} allScores={allScores} userScore={userScore.score}/>}
+          {userScore && <ScoreForm gameOver={gameOver} scoreQuery={scoreQuery} userScore={userScore} setUserScore={setUserScore}/>}
     </div>
   )
 

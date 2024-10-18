@@ -1,8 +1,10 @@
 import { React, useState, useEffect } from 'react'
 import styles from './ScoreForm.module.css'
 
-function ScoreForm({gameOver, scoreQuery, allScores, userScore}) {
+function ScoreForm({gameOver, scoreQuery, userScore, setUserScore}) {
     const [showModal, setShowModal] = useState(true)
+    const [allScores, setAllScores] = useState(false)
+    const [isHighScore, setIsHighScore] = useState(false)
 
     const addHighScore = async(e) => {
         e.preventDefault()
@@ -25,35 +27,59 @@ function ScoreForm({gameOver, scoreQuery, allScores, userScore}) {
                 throw new Error('Network response was not ok');
             }
             const responseData = await response.json();
+            setUserScore(responseData)
         } catch (error) {
             console.error('Error:', error);
         }
+    }
 
+
+    const getAllScores = async () => {
+        const API_SCORE_URL = "http://127.0.0.1:3000/api/scores"
+        try {
+            const response = await fetch(API_SCORE_URL)
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const responseData = await response.json();
+            setAllScores(responseData)
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    useEffect(() => {
+        getAllScores()
+    }, [gameOver, userScore])
+
+    function checkIfHighScore() {
+        return !allScores.some((score) => {
+            return score.score < userScore.score
+        })
+    }
+
+    function handleClick() {
         setShowModal(false)
     }
 
-    const topScores = allScores.slice(0, 5).map((score, idx) =>
-        <tbody key={score.id}>
-            <tr>
-                <td>{idx + 1}</td>
-                <td>{score.username}</td>
-                <td>{score.score}</td>
-            </tr>
-        </tbody>
-    )
+    function ModalForm() {
+        console.log(checkIfHighScore())
 
-    function checkIfHighScore() {
-        
-    }
+        const topScores = allScores.slice(0, 5).map((score, idx) =>
+            <tbody key={score.id}>
+                <tr>
+                    <td>{idx + 1}</td>
+                    <td>{score.username}</td>
+                    <td>{score.score}</td>
+                </tr>
+            </tbody>
+        )
 
-    checkIfHighScore()
-
-    function modalForm() {
         return (
             <div className={styles.modal}>
                 <div className={styles.modalContent}>
-                    <h2>You solved it in {userScore} seconds!</h2>
-                    <h2>New High Score!</h2>
+                    <h2>You solved it in {userScore.score} seconds!</h2>
+                    {checkIfHighScore() && <h2>New High Score!</h2>}
                     <div className={styles.table}>
                         <table>
                             <thead>
@@ -74,6 +100,7 @@ function ScoreForm({gameOver, scoreQuery, allScores, userScore}) {
                             <input type="submit" value="Submit" />
                         </div>
                     </form>
+                    <button onClick={handleClick}>Close</button>
                 </div>
             </div>
         )
@@ -81,7 +108,7 @@ function ScoreForm({gameOver, scoreQuery, allScores, userScore}) {
 
     return (
         <>
-            {showModal && modalForm()}
+            {showModal && allScores && <ModalForm/>}
             
         </>
     )

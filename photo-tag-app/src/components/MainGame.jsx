@@ -16,8 +16,8 @@ function MainGame({startGame, level}) {
   return (
     <div>
         <Score startGame={startGame} gameOver={gameOver}/>
-        {!finalTime && <Timer startGame={startGame} setFinalTime={setFinalTime} gameOver={gameOver} />}
         <Level level={level} setFound={setFound} found={found} setGameOver={setGameOver}/>
+        {!finalTime && <Timer startGame={startGame} setFinalTime={setFinalTime} gameOver={gameOver} />}
     </div>
   )
 }
