@@ -62,7 +62,6 @@ function ScoreForm({gameOver, scoreQuery, userScore, setUserScore}) {
         return (
             <div className={styles.modal}>
                 <div className={styles.modalContent}>
-                    <h2>You solved it in {userScore.score} seconds!</h2>
                     <HighScores allScores={allScores} userScore={userScore} setShowForm={setShowForm}/>
                     {showForm &&
                     <>
@@ -97,7 +96,7 @@ function HighScores({allScores, userScore, setShowForm}) {
     function checkIfHighScore() {
         // Checks if score is top 5 or highest
 
-        if (!allScores.slice(0, 5).every(score => score.score > userScore.score)) {
+        if (allScores.slice(0, 5).every(score => score.score > userScore.score)) {
             setShowForm(true)
             return setIsHighScore(true)
         }
@@ -112,20 +111,26 @@ function HighScores({allScores, userScore, setShowForm}) {
         checkIfHighScore()
     }, [userScore])
 
-    const topScores = allScores.slice(0, 5).map((score, idx) =>
-        <tbody key={score.id}>
-            <tr>
-                <td>{idx + 1}</td>
-                <td>{score.username}</td>
-                <td>{score.score}</td>
-            </tr>
-        </tbody>
+    const topScores = allScores.slice(0, 5).map((score, idx) => {
+        let color
+        score.id === userScore.id ? color = 'red' : color = ''
+        return (
+            <tbody key={score.id}>
+                <tr style={{color: color}}>
+                    <td>{idx + 1}</td>
+                    <td>{score.username}</td>
+                    <td>{score.score}</td>
+                </tr>
+            </tbody>
+            )
+        }
     )
 
     return (
         <>
             {isHighScore && <h2>New High Score!</h2>}
             {isTopFive && <h2>You're in the Top Five!</h2>}
+            <h3>You solved it in {userScore.score} seconds!</h3>
             <div className={styles.table}>
                 <table>
                     <thead>

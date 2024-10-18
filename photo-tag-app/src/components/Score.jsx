@@ -17,7 +17,7 @@ function Score({gameOver}) {
 
     const updateScore = async () => {
         const updateBody = {
-            username: '[Your Name]',
+            username: 'Anonymous',
         };
 
         const requestOptionsPatch = {
