@@ -35,8 +35,13 @@ function ScoreForm({gameOver, scoreQuery, userScore, setUserScore}) {
 
     const getAllScores = async () => {
         const API_SCORE_URL = "http://127.0.0.1:3000/api/scores"
+
+        const params = {
+            param1: 'value1',
+        };
+
         try {
-            const response = await fetch(API_SCORE_URL)
+            const response = await fetch(`${API_SCORE_URL}?picture_id=${scoreQuery.picture_id}`)
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }

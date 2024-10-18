@@ -3,10 +3,14 @@ class Api::ScoresController < ApplicationController
 
   # GET /scores
   def index
-    @scores = Score.all.where.not(score: nil)
+    not_nil = Score.all.where.not(score: nil)
+    @scores = not_nil.all.where(picture_id: params[:picture_id])
 
     # Sort scores by score (fastest to slowest)
     sorted_scores = @scores.sort_by { |score| score.score }
+    puts "_____--------_____"
+    p @scores
+    puts "_____--------_____"
     render json: sorted_scores
   end
 

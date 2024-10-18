@@ -99,7 +99,6 @@ function Level({level, setFound, found, setGameOver}) {
             <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}>
                 <Dropdown handleSelection={handleSelection} characters={data.characters} bounds={bounds.current} found={found} />
                 <TargetSquare bounds={bounds}/>
-                <h3>Testin</h3>
             </div>
         }
         {found && <MarkFound found={found} bounds={bounds}/>}
