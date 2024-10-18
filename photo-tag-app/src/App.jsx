@@ -55,13 +55,13 @@ function App() {
     }
   } 
 
-  function backToHome() {
+  function goHome() {
     setStartGame(false)
   }
   
   return (
     <>
-    <Navbar backToHome={backToHome}/>
+    <Navbar goHome={goHome}/>
       {!startGame && <h1>Welcome to Where's Waldo!</h1>}
       {!startGame && <h2>Please select a level:</h2>}
       <div className='levelsGrid'>
@@ -90,10 +90,10 @@ function ShowPictureThumbnails({allPictures, startLevel}) {
   )
 }
 
-function Navbar({backToHome}) {
+function Navbar({goHome}) {
   return(
     <>
-      <button onClick={backToHome}>All Levels</button>
+      <button onClick={goHome}>All Levels</button>
     </>
   )
 }

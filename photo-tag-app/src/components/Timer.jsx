@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Timer.module.css'
 
-function Timer({startGame, gameOver}) {
+function Timer({gameOver}) {
     const [isRunning, setIsRunning] = useState(false);
     const [seconds, setSeconds] = useState(0);
 

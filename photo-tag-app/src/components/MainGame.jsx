@@ -5,17 +5,15 @@ import Score from './Score';
 import styles from './MainGame.module.css'
 
 
-function MainGame({startGame, level}) {
+function MainGame({level}) {
     const [gameOver, setGameOver] = useState()
     const [found, setFound] = useState([])
 
-
-
   return (
     <div>
-        <Score startGame={startGame} gameOver={gameOver}/>
+        <Score gameOver={gameOver}/>
         <Level level={level} setFound={setFound} found={found} setGameOver={setGameOver}/>
-        {<Timer startGame={startGame} gameOver={gameOver} />}
+        {<Timer gameOver={gameOver} />}
     </div>
   )
 }

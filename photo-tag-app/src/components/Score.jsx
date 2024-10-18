@@ -3,7 +3,7 @@ import { React, useState, useEffect, useContext } from 'react'
 import ScoreForm from './ScoreForm';
 import { ScoreContext } from '../App';
 
-function Score({startGame, gameOver}) {
+function Score({gameOver}) {
     const [data, setData] = useState(null);
     const [allScores, setAllScores] = useState()
     const [userScore, setUserScore] = useState()
