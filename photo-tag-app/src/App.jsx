@@ -58,15 +58,19 @@ function App() {
   function goHome() {
     setStartGame(false)
   }
+
+  const Welcome = (
+    <>
+      <h1>Welcome to Where's Waldo!</h1>
+      <h2>Please select a level:</h2>
+    </>
+  )
   
   return (
     <>
     <Navbar goHome={goHome}/>
-      {!startGame && <h1>Welcome to Where's Waldo!</h1>}
-      {!startGame && <h2>Please select a level:</h2>}
-      <div className='levelsGrid'>
-        {!startGame && allPictures && <ShowPictureThumbnails allPictures={allPictures} startLevel={startLevel}/>}
-      </div>
+      {!startGame && Welcome}
+      {!startGame && allPictures && <ShowPictureThumbnails allPictures={allPictures} startLevel={startLevel}/>}
       <ScoreContext.Provider value={currentScore}>
         {startGame && <MainGame startGame={startGame} level={selectedLevel}/>}
       </ScoreContext.Provider>
@@ -76,7 +80,8 @@ function App() {
 
 function ShowPictureThumbnails({allPictures, startLevel}) {
   return (
-    allPictures.map(picture =>
+    <div className='levelsGrid'>
+    {allPictures.map(picture =>
       <li key={picture.id}>
         <div className='levelTiles'>
           <img
@@ -86,7 +91,8 @@ function ShowPictureThumbnails({allPictures, startLevel}) {
           <h3>{picture.title}</h3>
         </div>
       </li>
-    )
+    )}
+    </div>
   )
 }
 

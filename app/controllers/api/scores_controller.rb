@@ -8,9 +8,6 @@ class Api::ScoresController < ApplicationController
 
     # Sort scores by score (fastest to slowest)
     sorted_scores = @scores.sort_by { |score| score.score }
-    puts "_____--------_____"
-    p @scores
-    puts "_____--------_____"
     render json: sorted_scores
   end
 
