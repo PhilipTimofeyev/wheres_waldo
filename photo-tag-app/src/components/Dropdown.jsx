@@ -4,9 +4,7 @@ import styles from './Dropdown.module.css'
 const DROPDOWN_SIZE = .07
 
 function Dropdown(props) {
-
-    // const [selected, setSelected] = useState([])
-
+    
     const characterList = props.characters.map(character => {
         let selected = !!props.found.find((char) => Object.values(char).includes(character.id))
         if (selected) {

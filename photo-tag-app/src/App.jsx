@@ -13,10 +13,6 @@ function App() {
   const API_PICTURES_URL = "http://127.0.0.1:3000/api/pictures"
   const API_SCORE_URL = "http://127.0.0.1:3000/api/scores"
 
-  function beginGame() {
-    setStartGame(true)
-  }
-
   useEffect(() => {
 
     const dataFetch = async () => {
@@ -28,22 +24,6 @@ function App() {
     };
     dataFetch();
   }, []);
-
-  function showPictureThumbnails() {
-    return (
-      allPictures.map(picture =>
-        <li key={picture.id}>
-          <div className='levelTiles'>
-            <img
-              onClick={() => startLevel(picture)}
-              src={picture.image}
-            />
-            <h3>{picture.title}</h3>
-          </div>
-        </li>
-      )
-    )
-  }
 
   function startLevel(level) {
     setSelectedLevel(level)
@@ -74,17 +54,46 @@ function App() {
       console.error('Error:', error);
     }
   } 
+
+  function backToHome() {
+    setStartGame(false)
+  }
   
   return (
     <>
+    <Navbar backToHome={backToHome}/>
       {!startGame && <h1>Welcome to Where's Waldo!</h1>}
       {!startGame && <h2>Please select a level:</h2>}
       <div className='levelsGrid'>
-        {!startGame && allPictures && showPictureThumbnails()}
+        {!startGame && allPictures && <ShowPictureThumbnails allPictures={allPictures} startLevel={startLevel}/>}
       </div>
       <ScoreContext.Provider value={currentScore}>
         {startGame && <MainGame startGame={startGame} level={selectedLevel}/>}
       </ScoreContext.Provider>
+    </>
+  )
+}
+
+function ShowPictureThumbnails({allPictures, startLevel}) {
+  return (
+    allPictures.map(picture =>
+      <li key={picture.id}>
+        <div className='levelTiles'>
+          <img
+            onClick={() => startLevel(picture)}
+            src={picture.image}
+          />
+          <h3>{picture.title}</h3>
+        </div>
+      </li>
+    )
+  )
+}
+
+function Navbar({backToHome}) {
+  return(
+    <>
+      <button onClick={backToHome}>All Levels</button>
     </>
   )
 }

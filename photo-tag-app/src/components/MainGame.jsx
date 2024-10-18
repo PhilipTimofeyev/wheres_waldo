@@ -8,7 +8,6 @@ import styles from './MainGame.module.css'
 function MainGame({startGame, level}) {
     const [finalTime, setFinalTime] = useState()
     const [gameOver, setGameOver] = useState()
-    const [startRound, setStartRound] = useState(false)
     const [found, setFound] = useState([])
 
 
