@@ -1,9 +1,8 @@
 
 .timerDisplay {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 3rem;
+    margin-left: 50%;
+    justify-content: flex-start;
 }
 
 .btn {

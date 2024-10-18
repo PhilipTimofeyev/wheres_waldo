@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './Timer.module.css'
 
-function Timer({startGame, setFinalTime, gameOver}) {
+function Timer({startGame, gameOver}) {
     const [isRunning, setIsRunning] = useState(false);
     const [seconds, setSeconds] = useState(0);
 
@@ -10,19 +10,15 @@ function Timer({startGame, setFinalTime, gameOver}) {
         if (isRunning) {
             interval = setInterval(() => {
                 setSeconds(prevSeconds => prevSeconds + 1);
-            }, 1000);
+            }, 10);
         }
 
         return () => clearInterval(interval);
     }, [isRunning]);
 
     useEffect(() => {
-        if (gameOver) {
-            stopTimer()
-            setFinalTime(seconds)
-        } else if (startGame) {
-            startTimer()
-        }
+        startTimer()
+        if (gameOver) stopTimer()
     }, [gameOver])
 
     const startTimer = () => {
@@ -33,14 +29,13 @@ function Timer({startGame, setFinalTime, gameOver}) {
         setIsRunning(false);
     };
 
-    const resetTimer = () => {
-        setIsRunning(false);
-        setSeconds(0);
-    };
+    function setFixedTime() {
+        return (Math.round(seconds * 10) / 1000).toFixed(1)
+    }
 
     return (
         <div className={styles.timerDisplay}>
-            <h1>Timer: {seconds}</h1>
+            <h1>Timer: {setFixedTime()}</h1>
         </div>
     );
 }
