@@ -6,7 +6,7 @@ const DROPDOWN_SIZE = .07
 function Dropdown(props) {
     
     const characterList = props.characters.map(character => {
-        let selected = !!props.found.find((char) => Object.values(char).includes(character.id))
+        const selected = !!props.found.find((char) => Object.values(char).includes(character.id))
         if (selected) {
             return <li key={character.id} className={styles.selected}>{character.name}</li>
         } else {
@@ -15,11 +15,11 @@ function Dropdown(props) {
     })
 
     return (
-            <div className={styles.dropdown} style={{ width: props.bounds.width * DROPDOWN_SIZE }}>
-                <ul className={styles.characterList}>
-                    {characterList}
-                </ul>
-            </div>
+        <div className={styles.dropdown} style={{ width: props.bounds.width * DROPDOWN_SIZE }}>
+            <ul className={styles.characterList}>
+                {characterList}
+            </ul>
+        </div>
     )
 }
 

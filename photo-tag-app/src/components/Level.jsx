@@ -97,8 +97,9 @@ function Level({level, setFound, found, setGameOver}) {
         {data && <Picture handleClick={handleClick} data={data}/>}
         {showDropdown && 
             <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}>
-                <Dropdown handleSelection={handleSelection} characters={data.characters} bounds={bounds.current} found={found} mouseCoord={mouseCoord} />
+                <Dropdown handleSelection={handleSelection} characters={data.characters} bounds={bounds.current} found={found} />
                 <TargetSquare bounds={bounds}/>
+                <h3>Testin</h3>
             </div>
         }
         {found && <MarkFound found={found} bounds={bounds}/>}

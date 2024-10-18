@@ -4,13 +4,10 @@ import ScoreForm from './ScoreForm';
 import { ScoreContext } from '../App';
 
 function Score({gameOver}) {
-    const [data, setData] = useState(null);
-    const [allScores, setAllScores] = useState()
     const [userScore, setUserScore] = useState()
     const scoreQuery = useContext(ScoreContext)
 
-    const API_SCORE_URL = "http://127.0.0.1:3000/api/scores"
-    const UPDATE_URL = "http://127.0.0.1:3000/api/scores/"
+    const API_UPDATE_URL = "http://127.0.0.1:3000/api/scores/"
 
     useEffect(() => {
         if (gameOver) {
@@ -30,7 +27,7 @@ function Score({gameOver}) {
         };
 
         try {
-            const response = await fetch(`${UPDATE_URL}${scoreQuery.id}`, requestOptionsPatch);
+            const response = await fetch(`${API_UPDATE_URL}${scoreQuery.id}`, requestOptionsPatch);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -41,11 +38,11 @@ function Score({gameOver}) {
         }
     }
 
-  return (
-    <div>
-          {userScore && <ScoreForm gameOver={gameOver} scoreQuery={scoreQuery} userScore={userScore} setUserScore={setUserScore}/>}
-    </div>
-  )
+    return (
+        <div>
+                {userScore && <ScoreForm gameOver={gameOver} scoreQuery={scoreQuery} userScore={userScore} setUserScore={setUserScore}/>}
+        </div>
+    )
 
 }
 
