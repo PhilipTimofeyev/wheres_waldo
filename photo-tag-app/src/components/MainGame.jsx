@@ -6,13 +6,13 @@ import styles from './MainGame.module.css'
 
 
 function MainGame({level}) {
-    const [gameOver, setGameOver] = useState()
+    const [gameOver, setGameOver] = useState(false)
     const [found, setFound] = useState([])
 
   return (
     <div>
         <Score gameOver={gameOver}/>
-        <Level level={level} setFound={setFound} found={found} setGameOver={setGameOver}/>
+        <Level level={level} setFound={setFound} found={found} setGameOver={setGameOver} gameOver={gameOver}/>
         {<Timer gameOver={gameOver} />}
     </div>
   )

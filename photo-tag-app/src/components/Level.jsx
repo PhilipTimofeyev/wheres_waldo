@@ -4,7 +4,7 @@ import styles from './MainGame.module.css'
 
 const SQUARE_SIZE = .015
 
-function Level({level, setFound, found, setGameOver}) {
+function Level({level, setFound, found, setGameOver, gameOver}) {
     const [data, setData] = useState();
     const [mouseCoord, setMouseCoord] = useState()
     const [showDropdown, setShowDropdown] = useState(false); 
@@ -25,9 +25,11 @@ function Level({level, setFound, found, setGameOver}) {
     }, []);
 
     function handleClick(e) {
-        setMouseCoord([e.clientX, e.clientY])
-        showDropdown ? setShowDropdown(false) : setShowDropdown(true)
-        bounds.current = e.target.getBoundingClientRect()
+        if (!gameOver) {
+            setMouseCoord([e.clientX, e.clientY])
+            showDropdown ? setShowDropdown(false) : setShowDropdown(true)
+            bounds.current = e.target.getBoundingClientRect()
+        }
     }
 
     function normalizeCharCoord(character) {
@@ -81,15 +83,18 @@ function Level({level, setFound, found, setGameOver}) {
 
 
     useEffect(() => {
-        gameOver()
+        endGame()
     }, [found]);
 
-    function gameOver() {
+    function endGame() {
         let allFound
         if (data) {
             allFound = data.characters.length === found.length
         }
-        if (allFound) setGameOver(true)
+        if (allFound) {
+            setGameOver(true)
+            setShowDropdown(false)
+        }
     }
 
   return (
