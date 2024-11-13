@@ -5,7 +5,8 @@ import styles from './MainGame.module.css'
 const SQUARE_SIZE = .015
 
 function Level({level, setFound, found, setGameOver, gameOver}) {
-    const [data, setData] = useState();
+    const [levelData, setLevelData] = useState();
+    const [characters, setCharacters] = useState();
     const [mouseCoord, setMouseCoord] = useState()
     const [showDropdown, setShowDropdown] = useState(false); 
     const bounds = useRef()
@@ -19,10 +20,24 @@ function Level({level, setFound, found, setGameOver, gameOver}) {
                 )
             ).json();
 
-            setData(data);
+            setLevelData(data);
         };
         dataFetch();
     }, []);
+
+    useEffect(() => {
+        const API_URL = `http://127.0.0.1:3000/api/characters/${level.id}`
+        const dataFetch = async () => {
+            const data = await (
+                await fetch(
+                    API_URL,
+                )
+            ).json();
+
+            setCharacters(data);
+        };
+        dataFetch();
+    }, [levelData]);
 
     function handleClick(e) {
         if (!gameOver) {
@@ -34,8 +49,8 @@ function Level({level, setFound, found, setGameOver, gameOver}) {
 
     function normalizeCharCoord(character) {
         // calculates ratio of character position relative to the image size
-        const x_perc = character.x_coord / data.picture.image_width
-        const y_perc = character.y_coord / data.picture.image_height
+        const x_perc = character.x_coord / levelData.picture.image_width
+        const y_perc = character.y_coord / levelData.picture.image_height
 
         const x = bounds.current.width * x_perc
         const y = bounds.current.height * y_perc
@@ -57,7 +72,7 @@ function Level({level, setFound, found, setGameOver, gameOver}) {
 
     function handleSelection(e) {
         const charName = e.target.innerText
-        const charObj = data.characters.find(char => char.name === charName)
+        const charObj = levelData.characters.find(char => char.name === charName)
 
         const userCoord = normalizedUserCoord()
         const charCoord = normalizeCharCoord(charObj)
@@ -88,8 +103,8 @@ function Level({level, setFound, found, setGameOver, gameOver}) {
 
     function endGame() {
         let allFound
-        if (data) {
-            allFound = data.characters.length === found.length
+        if (levelData) {
+            allFound = levelData.characters.length === found.length
         }
         if (allFound) {
             setGameOver(true)
@@ -99,10 +114,10 @@ function Level({level, setFound, found, setGameOver, gameOver}) {
 
   return (
     <>
-        {data && <Picture handleClick={handleClick} data={data}/>}
+        {levelData && <Picture handleClick={handleClick} levelData={levelData}/>}
         {showDropdown && 
             <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}>
-                <Dropdown handleSelection={handleSelection} characters={data.characters} bounds={bounds.current} found={found} />
+                  <Dropdown handleSelection={handleSelection} characters={characters} bounds={bounds.current} found={found} />
                 <TargetSquare bounds={bounds}/>
             </div>
         }
@@ -111,9 +126,9 @@ function Level({level, setFound, found, setGameOver, gameOver}) {
   )
 }
 
-function Picture({handleClick, data}) {
+function Picture({handleClick, levelData}) {
     return (
-        <img onClick={handleClick} className={styles.gameImage} src={data.picture.image} />
+        <img onClick={handleClick} className={styles.gameImage} src={levelData.picture.image} />
     )
 }
 
