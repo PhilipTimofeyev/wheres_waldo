@@ -96,6 +96,15 @@ function Level({level, setFound, found, setGameOver, gameOver}) {
             (userY > (charY - squareValidAreaY) && userY < (charY + squareValidAreaY))
     }
 
+    // const characterList = characters.map(character => {
+    //         return (
+    //             <li key={character.id} className={styles.character}>
+    //                 <h5>{character.name} </h5>
+    //                 <img src={character.image} />
+    //             </li>
+    //         )
+    //     })
+
 
     useEffect(() => {
         endGame()
@@ -114,10 +123,11 @@ function Level({level, setFound, found, setGameOver, gameOver}) {
 
   return (
     <>
+          {/* { characters && <h1>Character(s) to find: {characterList} </h1> } */}
         {levelData && <Picture handleClick={handleClick} levelData={levelData}/>}
         {showDropdown && 
             <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}>
-                  <Dropdown handleSelection={handleSelection} characters={characters} bounds={bounds.current} found={found} />
+                <Dropdown handleSelection={handleSelection} characters={characters} bounds={bounds.current} found={found} />
                 <TargetSquare bounds={bounds}/>
             </div>
         }
