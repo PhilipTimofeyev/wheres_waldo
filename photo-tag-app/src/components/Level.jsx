@@ -11,14 +11,14 @@ const API_SCORE_URL = "http://127.0.0.1:3000/api/scores"
 
 
 function Level() {
-    const [levelData, setLevelData] = useState();
+    const [level, setLevel] = useState();
     const [characters, setCharacters] = useState();
     const [gameOver, setGameOver] = useState(false)
-    const [mouseCoord, setMouseCoord] = useState()
     const [currentScore, setCurrentScore] = useState()
     const [found, setFound] = useState([])
     const [showDropdown, setShowDropdown] = useState(false); 
     const bounds = useRef()
+    const mouseCoord = useRef()
     const { levelID } = useParams();
 
     useEffect(() => {
@@ -30,7 +30,7 @@ function Level() {
                 )
             ).json();
 
-            setLevelData(data);
+            setLevel(data);
         };
         dataFetch();
     }, []);
@@ -48,7 +48,7 @@ function Level() {
             createScore()
         };
         dataFetch();
-    }, [levelData]);
+    }, [level]);
 
     async function createScore() {
         const postBody = {
@@ -76,7 +76,7 @@ function Level() {
 
     function handleClick(e) {
         if (!gameOver) {
-            setMouseCoord([e.clientX, e.clientY])
+            mouseCoord.current = ([e.clientX, e.clientY])
             showDropdown ? setShowDropdown(false) : setShowDropdown(true)
             bounds.current = e.target.getBoundingClientRect()
         }
@@ -84,8 +84,8 @@ function Level() {
 
     function normalizeCharCoord(character) {
         // calculates ratio of character position relative to the image size
-        const x_perc = character.x_coord / levelData.picture.image_width
-        const y_perc = character.y_coord / levelData.picture.image_height
+        const x_perc = character.x_coord / level.picture.image_width
+        const y_perc = character.y_coord / level.picture.image_height
 
         const x = bounds.current.width * x_perc
         const y = bounds.current.height * y_perc
@@ -97,8 +97,8 @@ function Level() {
 
     function normalizedUserCoord() {
         // calculates the mouse position relative to the image
-        const x = mouseCoord[0] - bounds.current.left
-        const y = mouseCoord[1] - bounds.current.top
+        const x = mouseCoord.current[0] - bounds.current.left
+        const y = mouseCoord.current[1] - bounds.current.top
 
         const userCoord = { userX: x, userY: y }
 
@@ -107,7 +107,7 @@ function Level() {
 
     function handleSelection(e) {
         const charName = e.target.innerText
-        const charObj = levelData.characters.find(char => char.name === charName)
+        const charObj = level.characters.find(char => char.name === charName)
 
         const userCoord = normalizedUserCoord()
         const charCoord = normalizeCharCoord(charObj)
@@ -115,7 +115,7 @@ function Level() {
         // console.log(verifyCoord(userCoord, charCoord))
         if (verifyCoord(userCoord, charCoord)) {
             setFound([
-                ...found, { name: charObj.name, id: charObj.id, x_coord: mouseCoord[0], y_coord: mouseCoord[1] }
+                ...found, { name: charObj.name, id: charObj.id, x_coord: mouseCoord.current[0], y_coord: mouseCoord.current[1] }
             ])
         }
     }
@@ -142,41 +142,41 @@ function Level() {
 
 
     useEffect(() => {
+        function endGame() {
+            let allFound
+            if (level) {
+                allFound = level.characters.length === found.length
+            }
+            if (allFound) {
+                setGameOver(true)
+                setShowDropdown(false)
+            }
+        }
+        
         endGame()
     }, [found]);
 
-    function endGame() {
-        let allFound
-        if (levelData) {
-            allFound = levelData.characters.length === found.length
-        }
-        if (allFound) {
-            setGameOver(true)
-            setShowDropdown(false)
-        }
-    }
-
   return (
     <>
-          <Link to='/'>Select A Different Level</Link>
+        <Link to='/'>Select A Different Level</Link>
           {/* { characters && <h1>Character(s) to find: {characterList} </h1> } */}
         <Score gameOver={gameOver} scoreQuery={currentScore} />
-        {levelData && <Picture handleClick={handleClick} levelData={levelData}/>}
+        {characters && <Picture handleClick={handleClick} level={level}/>}
         {showDropdown && 
-            <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}>
+            <div className={styles.dropdown} style={{ left: mouseCoord.current[0], top: mouseCoord.current[1] }}>
                 <Dropdown handleSelection={handleSelection} characters={characters} bounds={bounds.current} found={found} />
                 <TargetSquare bounds={bounds}/>
             </div>
         }
-        <Timer gameOver={gameOver} />
+        {characters && <Timer gameOver={gameOver} />}
         {found && <MarkFound found={found} bounds={bounds}/>}
     </>
   )
 }
 
-function Picture({handleClick, levelData}) {
+function Picture({handleClick, level}) {
     return (
-        <img onClick={handleClick} className={styles.gameImage} src={levelData.picture.image} />
+        <img onClick={handleClick} className={styles.gameImage} src={level.picture.image} />
     )
 }
 
