@@ -2,6 +2,7 @@ class Api::CharactersController < ApplicationController
   def show
     @character = Character.find(params[:id])
 
-    render json: @character
+    character_with_image = @character.as_json.merge(image: url_for(@character.image))
+    render json: character_with_image
   end
 end
