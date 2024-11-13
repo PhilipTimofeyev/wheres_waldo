@@ -1,15 +1,22 @@
 import { React, useState, useEffect, useRef } from 'react'
 import { useParams } from "react-router-dom";
 import Dropdown from './Dropdown';
+import Timer from './Timer';
+import Score from './Score';
 import styles from './MainGame.module.css'
 
 const SQUARE_SIZE = .015
 
+const API_SCORE_URL = "http://127.0.0.1:3000/api/scores"
 
-function Level({level, setFound, found, setGameOver, gameOver}) {
+
+function Level() {
     const [levelData, setLevelData] = useState();
     const [characters, setCharacters] = useState();
+    const [gameOver, setGameOver] = useState(false)
     const [mouseCoord, setMouseCoord] = useState()
+    const [currentScore, setCurrentScore] = useState()
+    const [found, setFound] = useState([])
     const [showDropdown, setShowDropdown] = useState(false); 
     const bounds = useRef()
     const { levelID } = useParams();
@@ -38,9 +45,34 @@ function Level({level, setFound, found, setGameOver, gameOver}) {
             ).json();
 
             setCharacters(data);
+            createScore()
         };
         dataFetch();
     }, [levelData]);
+
+    async function createScore() {
+        const postBody = {
+            username: 'Anonymous',
+            picture_id: levelID
+        };
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(postBody)
+        };
+
+        try {
+            const response = await fetch(API_SCORE_URL, requestOptions);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const responseData = await response.json();
+            setCurrentScore(responseData)
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    } 
 
     function handleClick(e) {
         if (!gameOver) {
@@ -109,32 +141,34 @@ function Level({level, setFound, found, setGameOver, gameOver}) {
     //     })
 
 
-    // useEffect(() => {
-    //     endGame()
-    // }, [found]);
+    useEffect(() => {
+        endGame()
+    }, [found]);
 
-    // function endGame() {
-    //     let allFound
-    //     if (levelData) {
-    //         allFound = levelData.characters.length === found.length
-    //     }
-    //     if (allFound) {
-    //         setGameOver(true)
-    //         setShowDropdown(false)
-    //     }
-    // }
+    function endGame() {
+        let allFound
+        if (levelData) {
+            allFound = levelData.characters.length === found.length
+        }
+        if (allFound) {
+            setGameOver(true)
+            setShowDropdown(false)
+        }
+    }
 
   return (
     <>
           {/* { characters && <h1>Character(s) to find: {characterList} </h1> } */}
+        <Score gameOver={gameOver} scoreQuery={currentScore} />
         {levelData && <Picture handleClick={handleClick} levelData={levelData}/>}
-        {/* {showDropdown && 
+        {showDropdown && 
             <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}>
                 <Dropdown handleSelection={handleSelection} characters={characters} bounds={bounds.current} found={found} />
                 <TargetSquare bounds={bounds}/>
             </div>
-        } */}
-        {/* {found && <MarkFound found={found} bounds={bounds}/>} */}
+        }
+        <Timer gameOver={gameOver} />
+        {found && <MarkFound found={found} bounds={bounds}/>}
     </>
   )
 }

@@ -8,11 +8,11 @@ export const ScoreContext = createContext()
 function App() {
   const [startGame, setStartGame] = useState(false)
   const [allPictures, setAllPictures] = useState();
-  const [selectedLevel, setSelectedLevel] = useState();
-  const [currentScore, setCurrentScore] = useState()
+  // const [selectedLevel, setSelectedLevel] = useState();
+  // const [currentScore, setCurrentScore] = useState()
 
   const API_PICTURES_URL = "http://127.0.0.1:3000/api/pictures"
-  const API_SCORE_URL = "http://127.0.0.1:3000/api/scores"
+  // const API_SCORE_URL = "http://127.0.0.1:3000/api/scores"
 
   useEffect(() => {
 
@@ -27,54 +27,58 @@ function App() {
   }, []);
 
   function startLevel(level) {
-    setSelectedLevel(level)
+    // setSelectedLevel(level)
     setStartGame(true)
-    createScore(level)
+    // createScore(level)
   }
 
-  async function createScore(level) {
-    const postBody = {
-      username: 'Anonymous',
-      picture_id: level.id
-    };
+  // async function createScore(level) {
+  //   const postBody = {
+  //     username: 'Anonymous',
+  //     picture_id: level.id
+  //   };
 
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(postBody)
-    };
+  //   const requestOptions = {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify(postBody)
+  //   };
 
-    try {
-      const response = await fetch(API_SCORE_URL, requestOptions);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const responseData = await response.json();
-      setCurrentScore(responseData)
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  } 
+  //   try {
+  //     const response = await fetch(API_SCORE_URL, requestOptions);
+  //     if (!response.ok) {
+  //       throw new Error('Network response was not ok');
+  //     }
+  //     const responseData = await response.json();
+  //     setCurrentScore(responseData)
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  // } 
 
   function goHome() {
     setStartGame(false)
   }
 
-  const Welcome = (
+  function Welcome() {
+    return (
     <>
       <h1>Welcome to Where's Waldo!</h1>
       <h2>Please select a level:</h2>
     </>
-  )
+    )
+  }
   
   return (
     <>
     <Navbar goHome={goHome}/>
-      {!startGame && Welcome}
+      {/* {!startGame && Welcome} */}
+      {/* {Welcome} */}
+      <Welcome />
       {!startGame && allPictures && <ShowPictureThumbnails allPictures={allPictures} startLevel={startLevel}/>}
-      <ScoreContext.Provider value={currentScore}>
+      {/* <ScoreContext.Provider value={currentScore}> */}
         {startGame && <MainGame startGame={startGame} level={selectedLevel}/>}
-      </ScoreContext.Provider>
+      {/* </ScoreContext.Provider> */}
     </>
   )
 }

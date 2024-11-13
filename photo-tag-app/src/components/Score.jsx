@@ -3,9 +3,9 @@ import { React, useState, useEffect, useContext } from 'react'
 import ScoreForm from './ScoreForm';
 import { ScoreContext } from '../App';
 
-function Score({gameOver}) {
+function Score({gameOver, scoreQuery}) {
     const [userScore, setUserScore] = useState()
-    const scoreQuery = useContext(ScoreContext)
+    // const scoreQuery = useContext(ScoreContext)
 
     const API_UPDATE_URL = "http://127.0.0.1:3000/api/scores/"
 

@@ -6,8 +6,8 @@ import styles from './MainGame.module.css'
 
 
 function MainGame({level}) {
-    const [gameOver, setGameOver] = useState(false)
-    const [found, setFound] = useState([])
+    // const [gameOver, setGameOver] = useState(false)
+    // const [found, setFound] = useState([])
 
   return (
     <div>
