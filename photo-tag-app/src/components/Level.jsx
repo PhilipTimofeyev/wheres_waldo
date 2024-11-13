@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useRef } from 'react'
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Dropdown from './Dropdown';
 import Timer from './Timer';
 import Score from './Score';
@@ -158,6 +158,7 @@ function Level() {
 
   return (
     <>
+          <Link to='/'>Select A Different Level</Link>
           {/* { characters && <h1>Character(s) to find: {characterList} </h1> } */}
         <Score gameOver={gameOver} scoreQuery={currentScore} />
         {levelData && <Picture handleClick={handleClick} levelData={levelData}/>}

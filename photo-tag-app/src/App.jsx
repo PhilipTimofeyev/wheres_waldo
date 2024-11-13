@@ -1,8 +1,8 @@
 import { useState, useEffect, createContext } from 'react'
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import './App.css'
 import './components/MainGame'
-import MainGame from './components/MainGame'
+// import MainGame from './components/MainGame'
 export const ScoreContext = createContext()
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
 
   function startLevel(level) {
     // setSelectedLevel(level)
-    setStartGame(true)
+    // setStartGame(true)
     // createScore(level)
   }
 
@@ -56,9 +56,9 @@ function App() {
   //   }
   // } 
 
-  function goHome() {
-    setStartGame(false)
-  }
+  // function goHome() {
+  //   setStartGame(false)
+  // }
 
   function Welcome() {
     return (
@@ -71,19 +71,16 @@ function App() {
   
   return (
     <>
-    <Navbar goHome={goHome}/>
-      {/* {!startGame && Welcome} */}
-      {/* {Welcome} */}
       <Welcome />
-      {!startGame && allPictures && <ShowPictureThumbnails allPictures={allPictures} startLevel={startLevel}/>}
+      {allPictures && <ShowPictureThumbnails allPictures={allPictures}/>}
       {/* <ScoreContext.Provider value={currentScore}> */}
-        {startGame && <MainGame startGame={startGame} level={selectedLevel}/>}
+        {/* {startGame && <MainGame startGame={startGame} level={selectedLevel}/>} */}
       {/* </ScoreContext.Provider> */}
     </>
   )
 }
 
-function ShowPictureThumbnails({allPictures, startLevel}) {
+function ShowPictureThumbnails({allPictures}) {
   return (
     <div className='levelsGrid'>
     {allPictures.map(picture =>
@@ -100,12 +97,12 @@ function ShowPictureThumbnails({allPictures, startLevel}) {
   )
 }
 
-function Navbar({goHome}) {
-  return(
-    <>
-      <button onClick={goHome}>All Levels</button>
-    </>
-  )
-}
+// function Navbar() {
+//   return(
+//     <>
+//       <Link to='/'>Back Home</Link>
+//     </>
+//   )
+// }
 
 export default App
