@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
+  get "characters/show"
   namespace :api do
     resources :pictures
     resources :scores
+    resources :characters, only: [ :show ]
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
