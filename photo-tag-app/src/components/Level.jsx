@@ -1,8 +1,10 @@
 import { React, useState, useEffect, useRef } from 'react'
+import { useParams } from "react-router-dom";
 import Dropdown from './Dropdown';
 import styles from './MainGame.module.css'
 
 const SQUARE_SIZE = .015
+
 
 function Level({level, setFound, found, setGameOver, gameOver}) {
     const [levelData, setLevelData] = useState();
@@ -10,9 +12,10 @@ function Level({level, setFound, found, setGameOver, gameOver}) {
     const [mouseCoord, setMouseCoord] = useState()
     const [showDropdown, setShowDropdown] = useState(false); 
     const bounds = useRef()
+    const { levelID } = useParams();
 
     useEffect(() => {
-        const API_URL = `http://127.0.0.1:3000/api/pictures/${level.id}`
+        const API_URL = `http://127.0.0.1:3000/api/pictures/${levelID}`
         const dataFetch = async () => {
             const data = await (
                 await fetch(
@@ -26,7 +29,7 @@ function Level({level, setFound, found, setGameOver, gameOver}) {
     }, []);
 
     useEffect(() => {
-        const API_URL = `http://127.0.0.1:3000/api/characters/${level.id}`
+        const API_URL = `http://127.0.0.1:3000/api/characters/${levelID}`
         const dataFetch = async () => {
             const data = await (
                 await fetch(
@@ -106,32 +109,32 @@ function Level({level, setFound, found, setGameOver, gameOver}) {
     //     })
 
 
-    useEffect(() => {
-        endGame()
-    }, [found]);
+    // useEffect(() => {
+    //     endGame()
+    // }, [found]);
 
-    function endGame() {
-        let allFound
-        if (levelData) {
-            allFound = levelData.characters.length === found.length
-        }
-        if (allFound) {
-            setGameOver(true)
-            setShowDropdown(false)
-        }
-    }
+    // function endGame() {
+    //     let allFound
+    //     if (levelData) {
+    //         allFound = levelData.characters.length === found.length
+    //     }
+    //     if (allFound) {
+    //         setGameOver(true)
+    //         setShowDropdown(false)
+    //     }
+    // }
 
   return (
     <>
           {/* { characters && <h1>Character(s) to find: {characterList} </h1> } */}
         {levelData && <Picture handleClick={handleClick} levelData={levelData}/>}
-        {showDropdown && 
+        {/* {showDropdown && 
             <div className={styles.dropdown} style={{ left: mouseCoord[0], top: mouseCoord[1] }}>
                 <Dropdown handleSelection={handleSelection} characters={characters} bounds={bounds.current} found={found} />
                 <TargetSquare bounds={bounds}/>
             </div>
-        }
-        {found && <MarkFound found={found} bounds={bounds}/>}
+        } */}
+        {/* {found && <MarkFound found={found} bounds={bounds}/>} */}
     </>
   )
 }

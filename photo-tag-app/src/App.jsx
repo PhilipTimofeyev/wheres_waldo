@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext } from 'react'
+import { Link } from "react-router-dom";
 import './App.css'
 import './components/MainGame'
 import MainGame from './components/MainGame'
@@ -84,10 +85,9 @@ function ShowPictureThumbnails({allPictures, startLevel}) {
     {allPictures.map(picture =>
       <li key={picture.id}>
         <div className='levelTiles'>
-          <img
-            onClick={() => startLevel(picture)}
-            src={picture.image}
-          />
+          <Link to={`/level/${picture.id}`}>
+            <img src={picture.image}/>
+          </Link>
           <h3>{picture.title}</h3>
         </div>
       </li>

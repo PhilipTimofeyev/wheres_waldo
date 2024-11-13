@@ -13,7 +13,7 @@ function MainGame({level}) {
     <div>
         <Score gameOver={gameOver}/>
         <Level level={level} setFound={setFound} found={found} setGameOver={setGameOver} gameOver={gameOver}/>
-        {<Timer gameOver={gameOver} />}
+        {/* {<Timer gameOver={gameOver} />} */}
     </div>
   )
 }
