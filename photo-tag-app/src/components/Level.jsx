@@ -17,9 +17,9 @@ function Level() {
     const [currentScore, setCurrentScore] = useState()
     const [found, setFound] = useState([])
     const [showDropdown, setShowDropdown] = useState(false); 
-    const bounds = useRef()
     const mouseCoord = useRef()
     const { levelID } = useParams();
+    const bounds = useRef()
 
     useEffect(() => {
         const API_URL = `http://127.0.0.1:3000/api/pictures/${levelID}`
@@ -78,7 +78,9 @@ function Level() {
         if (!gameOver) {
             mouseCoord.current = ([e.clientX, e.clientY])
             showDropdown ? setShowDropdown(false) : setShowDropdown(true)
+            // Set bounds to establish proportion of image
             bounds.current = e.target.getBoundingClientRect()
+            console.log(bounds.current)
         }
     }
 
@@ -159,9 +161,9 @@ function Level() {
   return (
     <>
         <Link to='/'>Select A Different Level</Link>
-          {/* { characters && <h1>Character(s) to find: {characterList} </h1> } */}
+        {characters && <Characters characters={characters}/> }
         <Score gameOver={gameOver} scoreQuery={currentScore} />
-        {characters && <Picture handleClick={handleClick} level={level}/>}
+        {level && <Picture handleClick={handleClick} level={level}/>}
         {showDropdown && 
             <div className={styles.dropdown} style={{ left: mouseCoord.current[0], top: mouseCoord.current[1] }}>
                 <Dropdown handleSelection={handleSelection} characters={characters} bounds={bounds.current} found={found} />
@@ -177,6 +179,26 @@ function Level() {
 function Picture({handleClick, level}) {
     return (
         <img onClick={handleClick} className={styles.gameImage} src={level.picture.image} />
+    )
+}
+
+function Characters({characters}) {
+    const characterList = characters.map(character => {
+        return (
+            <li key={character.id} className={styles.character}>
+                <p>{character.name} </p>
+                <img src={character.image} />
+            </li>
+        )
+    })
+
+    return (
+        <>
+            <ul class={styles.characters}>
+                <h3>People to find: </h3>
+                {characterList}
+            </ul>
+        </>
     )
 }
 
