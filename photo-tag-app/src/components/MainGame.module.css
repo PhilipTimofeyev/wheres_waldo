@@ -80,3 +80,31 @@
     object-fit: cover;
     object-position: top
 }
+
+.countdown {
+    position: absolute;
+    top: 50dvh;
+    left: 50dvw;
+    font-size: 3em;
+    animation: move-words 20s linear, fadeOutAnimation linear 5s;
+}
+
+@keyframes move-words {
+    0% {
+        bottom: 100%;
+    }
+
+    100% {
+        top: -100%;
+    }
+}
+
+@keyframes fadeOutAnimation {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}

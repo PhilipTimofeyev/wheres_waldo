@@ -10,6 +10,7 @@ const SQUARE_SIZE = .015
 function Level() {
     const [level, setLevel] = useState();
     const [characters, setCharacters] = useState();
+    const [startGame, setStartGame] = useState()
     const [gameOver, setGameOver] = useState(false)
     const [found, setFound] = useState([])
     const [showDropdown, setShowDropdown] = useState(false); 
@@ -84,7 +85,6 @@ function Level() {
         const userCoord = normalizedUserCoord()
         const charCoord = normalizeCharCoord(charObj)
 
-        // console.log(verifyCoord(userCoord, charCoord))
         if (verifyCoord(userCoord, charCoord)) {
             setFound([
                 ...found, { name: charObj.name, id: charObj.id, x_coord: mouseCoord.current[0], y_coord: mouseCoord.current[1] }
@@ -105,32 +105,29 @@ function Level() {
 
     useEffect(() => {
         function endGame() {
-            let allFound
-            if (level) {
-                allFound = level.characters.length === found.length
-            }
-            if (allFound) {
+            if (characters.length === found.length) {
                 setGameOver(true)
                 setShowDropdown(false)
             }
         }
         
-        endGame()
+        if (characters) endGame()
     }, [found]);
 
   return (
     <>
         <Link to='/'>Select A Different Level</Link>
-        {characters && <Characters characters={characters}/> }
-        <Score gameOver={gameOver} />
-        {level && <Picture handleClick={handleClick} level={level}/>}
+        <Countdown setStartGame={setStartGame}/>
+        {startGame && <Characters characters={characters}/> }
+        {startGame && <Score gameOver={gameOver} /> }
+        {startGame && <Picture handleClick={handleClick} level={level}/>}
         {showDropdown && 
             <div className={styles.dropdown} style={{ left: mouseCoord.current[0], top: mouseCoord.current[1] }}>
                 <Dropdown handleSelection={handleSelection} characters={characters} bounds={bounds.current} found={found} />
                 <TargetSquare bounds={bounds}/>
             </div>
         }
-        {characters && <Timer gameOver={gameOver} />}
+        {startGame && <Timer gameOver={gameOver} />}
         {found && <MarkFound found={found} bounds={bounds}/>}
     </>
   )
@@ -174,6 +171,42 @@ function MarkFound({found, bounds}) {
             return < div key={char.id} className={styles.foundSquare} style={{ left: char.x_coord, top: char.y_coord, width: bounds.current.width * SQUARE_SIZE, height: bounds.current.width * SQUARE_SIZE, borderWidth: bounds.current.width * .003 }}></div >
         })
     )
+}
+
+function Countdown({setStartGame}) {
+    const Countdown = 3 // seconds
+
+    const [count, setCount] = useState(Countdown);
+    const [showText, setShowText] = useState(true);
+
+
+    useEffect(() => {
+        if (count > 0) {
+            const timer = setTimeout(() => {
+                setCount(count - 1);
+            }, 1000);
+
+            return () => clearTimeout(timer);
+        }
+
+        setStartGame(true)
+    }, [count]);
+
+    useEffect(() => {
+        if (showText) {
+            const timeoutId = setTimeout(() => {
+                setShowText(false);
+            }, 4000);
+
+            return () => clearTimeout(timeoutId);
+        }
+    }, [showText]);
+
+    return (
+        <div className={styles.countdown}>
+            {showText && <h1>{count > 0 ? count : "Go!"}</h1> }
+        </div>
+    );
 }
 
 
