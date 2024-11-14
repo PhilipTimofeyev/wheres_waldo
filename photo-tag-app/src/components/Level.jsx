@@ -109,13 +109,12 @@ function Level() {
                 setShowDropdown(false)
             }
         }
-        
         if (characters) endGame()
     }, [found]);
 
   return (
     <div className={styles.mainContainer}>
-        <Link to='/'>Select A Different Level</Link>
+        <div className={styles.navLink}><Link to='/'>Select A Different Level</Link></div>
         <Countdown setStartGame={setStartGame}/>
         {startGame && <Score gameOver={gameOver} /> }
         {startGame && <Characters characters={characters}/> }

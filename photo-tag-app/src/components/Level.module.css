@@ -1,9 +1,11 @@
 
 .gameImage {
     display: flex;
-    margin: auto;
-    max-height: 80dvh;
-    width: auto;
+    /* margin: auto; */
+    /* max-height: 80dvh; */
+    /* max-width: f; */
+    /* width: auto; */
+    max-height: 70dvh;
 }
 
 /* @media screen and (max-width: 6000px) {
@@ -15,16 +17,31 @@
 
 
 .mainContainer {
-    /* max-width: 100dvw; */
+    /* min-width: 100%; */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    gap: var(--space-s);
+    /* min-height: fit-content; */
+    max-height: 100dvh;
+}
+
+.navLink {
+    background-color: rgb(137, 178, 213);
+    width: 100%;
+    text-align: center;
+    padding: var(--space-2xs);
+}
+
+.navLink a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .targetSquare,
 .foundSquare {
-
     width: 50px;
     height: 50px;
     border-style: solid;
@@ -55,7 +72,8 @@
 .characters {
     display: flex;
     gap: 50px;
-    margin: auto;
+    margin: 0 10px;
+    /* margin: auto; */
     /* margin-bottom: 10dvw; */
     justify-content: center;
     align-items: center;
@@ -72,12 +90,13 @@
 .characters p {
     margin-top: 0;
     margin-bottom: 5px;
+    font-size: var(--step--2);
 }
 
 .characters img {
     max-width: 100%;
-    width: 50px;
-    height: 50px;
+    width: var(--space-m);
+    height: var(--space-m);
     object-fit: cover;
     object-position: top
 }

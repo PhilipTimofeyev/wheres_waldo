@@ -7,7 +7,6 @@ function Score({ gameOver }) {
     const [userScore, setUserScore] = useState()
     const [scoreQuery, setScoreQuery] = useState()
     const { levelID } = useParams();
-    // const scoreQuery = useContext(ScoreContext)
 
     const API_SCORES_URL = "http://127.0.0.1:3000/api/scores/"
 

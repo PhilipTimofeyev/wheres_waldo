@@ -32,8 +32,11 @@ h3 {
 }
 
 img {
-  /* width: 30vw; */
   max-width: 100%;
+}
+
+ul {
+  padding: 0;
 }
 
 .levelsGrid {
