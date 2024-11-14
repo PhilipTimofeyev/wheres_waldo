@@ -78,9 +78,8 @@ function Level() {
         return userCoord
     }
 
-    function handleSelection(e) {
-        const charName = e.target.innerText
-        const charObj = level.characters.find(char => char.name === charName)
+    function handleSelection(charID) {
+        const charObj = level.characters.find(char => char.id === charID)
 
         const userCoord = normalizedUserCoord()
         const charCoord = normalizeCharCoord(charObj)
@@ -115,7 +114,7 @@ function Level() {
     }, [found]);
 
   return (
-    <>
+    <div className={styles.mainContainer}>
         <Link to='/'>Select A Different Level</Link>
         <Countdown setStartGame={setStartGame}/>
         {startGame && <Characters characters={characters}/> }
@@ -129,7 +128,7 @@ function Level() {
         }
         {startGame && <Timer gameOver={gameOver} />}
         {found && <MarkFound found={found} bounds={bounds}/>}
-    </>
+    </div>
   )
 }
 
@@ -174,7 +173,7 @@ function MarkFound({found, bounds}) {
 }
 
 function Countdown({setStartGame}) {
-    const Countdown = 3 // seconds
+    const Countdown = 1 // seconds
 
     const [count, setCount] = useState(Countdown);
     const [showText, setShowText] = useState(true);
