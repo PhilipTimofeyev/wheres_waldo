@@ -1,8 +1,10 @@
 import { React, useState, useEffect, useRef } from 'react'
 import { useParams, Link } from "react-router-dom";
 import Dropdown from './Dropdown';
-import Timer from './Timer';
-import Score from './Score/Score';
+import Countdown from './Countdown';
+import Characters from './Characters';
+import Timer from '../Timer';
+import Score from '../Score/Score';
 import styles from './Level.module.css'
 
 const SQUARE_SIZE = .015
@@ -19,6 +21,7 @@ function Level() {
     const { levelID } = useParams();
     const bounds = useRef()
 
+    // Get Level Info
     useEffect(() => {
         const API_URL = `http://127.0.0.1:3000/api/pictures/${levelID}`
         const dataFetch = async () => {
@@ -33,6 +36,7 @@ function Level() {
         dataFetch();
     }, []);
 
+    // Get Characters Info
     useEffect(() => {
         const API_URL = `http://127.0.0.1:3000/api/characters/${levelID}`
         const dataFetch = async () => {
@@ -118,99 +122,65 @@ function Level() {
 
   return (
     <div className={styles.mainContainer}>
-        <div className={styles.navLink}><Link to='/'>Select A Different Level</Link></div>
+        <div className={styles.navLink}>
+            <Link to='/'>Select A Different Level</Link>
+        </div>
         <Countdown setStartGame={setStartGame}/>
         {startGame && <Score gameOver={gameOver} /> }
         {startGame && <Characters characters={characters}/> }
         {startGame && <Picture handleClick={handleClick} level={level}/>}
         {showDropdown && 
             <div className={styles.dropdown} style={{ left: mouseCoord.current[0], top: mouseCoord.current[1] }}>
-                <Dropdown handleSelection={handleSelection} characters={characters} found={found} isShaking={isShaking} />
-                <TargetSquare bounds={bounds}/>
+                <Dropdown 
+                    handleSelection={handleSelection} 
+                    characters={characters} found={found} 
+                    isShaking={isShaking} 
+                />
+                <TargetSquare 
+                    bounds={bounds}
+                />
             </div>
         }
         {startGame && <Timer gameOver={gameOver} />}
-        {found && <MarkFound found={found} bounds={bounds}/>}
+        {found && 
+        <MarkFound 
+            found={found} 
+            bounds={bounds}
+        />
+        }
     </div>
   )
 }
 
 function Picture({handleClick, level}) {
     return (
-        <img onClick={handleClick} className={styles.gameImage} src={level.picture.image} />
-    )
-}
-
-function Characters({characters}) {
-    const characterList = characters.map(character => {
-        return (
-            <li key={character.id} className={styles.character}>
-                <p>{character.name} </p>
-                <img src={character.image} />
-            </li>
-        )
-    })
-
-    return (
-        <>
-            <ul className={styles.characters}>
-                <h3>Can you find: </h3>
-                {characterList}
-                <h3>?</h3>
-            </ul>
-        </>
+        <img 
+            onClick={handleClick} 
+            className={styles.gameImage} 
+            src={level.picture.image} 
+        />
     )
 }
 
 function TargetSquare({bounds}) {
     return (
-        <div className={styles.targetSquare} style={{ width: bounds.current.width * SQUARE_SIZE, height: bounds.current.width * SQUARE_SIZE, borderWidth: bounds.current.width * .003 }}></div>
+        <div 
+            className={styles.targetSquare} 
+            style={{ width: bounds.current.width * SQUARE_SIZE, height: bounds.current.width * SQUARE_SIZE, borderWidth: bounds.current.width * .003 }}>                
+        </div>
     )
 }
 
 function MarkFound({found, bounds}) {
     return (
         found.map(char => {
-            return < div key={char.id} className={styles.foundSquare} style={{ left: char.x_coord, top: char.y_coord, width: bounds.current.width * SQUARE_SIZE, height: bounds.current.width * SQUARE_SIZE, borderWidth: bounds.current.width * .003 }}></div >
+            return < div 
+                key={char.id} 
+                className={styles.foundSquare} 
+                style={{ left: char.x_coord, top: char.y_coord, width: bounds.current.width * SQUARE_SIZE, height: bounds.current.width * SQUARE_SIZE, borderWidth: bounds.current.width * .003 }}>
+            </div >
         })
     )
 }
-
-function Countdown({setStartGame}) {
-    const Countdown = 1 // seconds
-
-    const [count, setCount] = useState(Countdown);
-    const [showText, setShowText] = useState(true);
-
-
-    useEffect(() => {
-        if (count > 0) {
-            const timer = setTimeout(() => {
-                setCount(count - 1);
-            }, 1000);
-
-            return () => clearTimeout(timer);
-        }
-
-        setStartGame(true)
-    }, [count]);
-
-    useEffect(() => {
-        if (showText) {
-            const timeoutId = setTimeout(() => {
-                setShowText(false);
-            }, 4000);
-
-            return () => clearTimeout(timeoutId);
-        }
-    }, [showText]);
-
-    return (
-        <div className={styles.countdown}>
-            {showText && <h1>{count > 0 ? count : "Go!"}</h1> }
-        </div>
-    );
-}
-
 
 export default Level

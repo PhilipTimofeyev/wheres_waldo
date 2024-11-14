@@ -1,10 +1,4 @@
 
-.gameImage {
-    display: flex;
-    max-height: 70dvh;
-}
-
-
 .mainContainer {
     display: flex;
     flex-direction: column;
@@ -12,6 +6,11 @@
     justify-content: flex-start;
     gap: var(--space-s);
     max-height: 100dvh;
+}
+
+.gameImage {
+    display: flex;
+    max-height: 70dvh;
 }
 
 .navLink {
@@ -56,38 +55,6 @@
     display: block;
 }
 
-.characters {
-    display: flex;
-    gap: 50px;
-    margin: 0 10px;
-    /* margin: auto; */
-    /* margin-bottom: 10dvw; */
-    justify-content: center;
-    align-items: center;
-}
-
-.characters h3 {
-    font-size: var(--step--1);
-}
-
-.characters li {
-    text-align: center;
-}
-
-.characters p {
-    margin-top: 0;
-    margin-bottom: 5px;
-    font-size: var(--step--2);
-}
-
-.characters img {
-    /* max-width: 100%; */
-    width: var(--space-m);
-    height: var(--space-m);
-    object-fit: cover;
-    object-position: top
-}
-
 .countdown {
     position: absolute;
     top: 50dvh;
@@ -113,14 +80,5 @@
 
     100% {
         opacity: 0;
-    }
-}
-
-@media screen and (min-width: 1200px) {
-    .characters img {
-        width: var(--space-xl);
-        height: var(--space-xl);
-        object-fit: cover;
-        object-position: top
     }
 }

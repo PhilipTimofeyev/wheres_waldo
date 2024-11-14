@@ -1,7 +1,6 @@
-import { useState, useEffect, createContext } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import LevelThumbnails from './components/LevelThumbnails';
-export const ScoreContext = createContext()
 
 function App() {
   const [levels, setLevels] = useState();
