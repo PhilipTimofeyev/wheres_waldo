@@ -1,29 +1,16 @@
 
 .gameImage {
     display: flex;
-    /* margin: auto; */
-    /* max-height: 80dvh; */
-    /* max-width: f; */
-    /* width: auto; */
     max-height: 70dvh;
 }
 
-/* @media screen and (max-width: 6000px) {
-    .gameImage {
-        width: auto;
-        max-height: 85vh;
-    }
-} */
-
 
 .mainContainer {
-    /* min-width: 100%; */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     gap: var(--space-s);
-    /* min-height: fit-content; */
     max-height: 100dvh;
 }
 
@@ -94,7 +81,7 @@
 }
 
 .characters img {
-    max-width: 100%;
+    /* max-width: 100%; */
     width: var(--space-m);
     height: var(--space-m);
     object-fit: cover;
@@ -111,11 +98,11 @@
 
 @keyframes move-words {
     0% {
-        bottom: 100%;
+        bottom: -100%;
     }
 
     100% {
-        top: -100%;
+        top: 100%;
     }
 }
 
@@ -126,5 +113,14 @@
 
     100% {
         opacity: 0;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .characters img {
+        width: var(--space-xl);
+        height: var(--space-xl);
+        object-fit: cover;
+        object-position: top
     }
 }
