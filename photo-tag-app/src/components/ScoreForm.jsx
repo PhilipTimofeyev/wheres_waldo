@@ -77,16 +77,16 @@ function ScoreForm({gameOver, scoreQuery, userScore, setUserScore}) {
                 <div className={styles.modalContent}>
                     <HighScores allScores={allScores} userScore={userScore} setShowForm={setShowForm}/>
                     {showForm &&
-                    <>
+                    <div>
                         <form method='post' onSubmit={addHighScore} className={styles.form}>
-                            <div>
-                                <label htmlFor="username">Name: </label>
+                                <div className={styles.formInput} >
+                                    <label htmlFor="username"><b>Enter Name</b> </label>
                                 <input type="text" name="username" id="userNameInputField" />
                                 <br />
                                 <input type="submit" value="Submit" />
                             </div>
                         </form>
-                    </>
+                    </div>
                     }
                     <button onClick={closeModal}>Close</button>
                 </div>
