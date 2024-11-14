@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import Dropdown from './Dropdown';
 import Countdown from './Countdown';
 import Characters from './Characters';
-import Timer from '../Timer';
+import Timer from './Timer';
 import Score from '../Score/Score';
 import styles from './Level.module.css'
 

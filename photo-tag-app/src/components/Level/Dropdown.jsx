@@ -14,7 +14,11 @@ function Dropdown({ handleSelection, characters, found, isShaking }) {
                     </li>)
         } else {
             return (
-                <li onClick={e => handleSelection(character.id)} key={character.id} className={`${styles.character} ${isShaking ? styles.shake : ''}`}>
+                <li 
+                    onClick={e => handleSelection(character.id)} 
+                    key={character.id} 
+                    className={`${styles.character} ${isShaking ? styles.shake : ''}`}
+                >
                     <h5>{character.name} </h5>
                     <img src={character.image}/>
                 </li>
