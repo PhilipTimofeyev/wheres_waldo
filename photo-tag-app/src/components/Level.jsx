@@ -14,6 +14,7 @@ function Level() {
     const [gameOver, setGameOver] = useState(false)
     const [found, setFound] = useState([])
     const [showDropdown, setShowDropdown] = useState(false); 
+    const [isShaking, setIsShaking] = useState(false);
     const mouseCoord = useRef()
     const { levelID } = useParams();
     const bounds = useRef()
@@ -88,6 +89,9 @@ function Level() {
             setFound([
                 ...found, { name: charObj.name, id: charObj.id, x_coord: mouseCoord.current[0], y_coord: mouseCoord.current[1] }
             ])
+        } else {
+            setIsShaking(true)
+            setTimeout(() => setIsShaking(false), 500);
         }
     }
 
@@ -121,7 +125,7 @@ function Level() {
         {startGame && <Picture handleClick={handleClick} level={level}/>}
         {showDropdown && 
             <div className={styles.dropdown} style={{ left: mouseCoord.current[0], top: mouseCoord.current[1] }}>
-                <Dropdown handleSelection={handleSelection} characters={characters} bounds={bounds.current} found={found} />
+                <Dropdown handleSelection={handleSelection} characters={characters} found={found} isShaking={isShaking} />
                 <TargetSquare bounds={bounds}/>
             </div>
         }

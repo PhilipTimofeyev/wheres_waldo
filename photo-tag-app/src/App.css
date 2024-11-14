@@ -57,7 +57,7 @@ li {
   list-style-type: none;
 }
 
-.levelTiles li:hover {
+li:hover .levelTiles {
   border: solid darkblue 5px;
   border-radius: 10px;
 }

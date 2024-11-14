@@ -7,7 +7,6 @@ class Api::ScoresController < ApplicationController
     @scores = not_nil.all.where(picture_id: params[:picture_id])
 
     # Sort scores by score (fastest to slowest)
-    # sorted_scores = @scores.sort_by { |score| score.score }
     sorted_scores = @scores.order(:score)
     render json: sorted_scores
   end
