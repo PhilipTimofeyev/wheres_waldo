@@ -2,7 +2,7 @@ import { React, useState, useEffect, useRef } from 'react'
 import { useParams, Link } from "react-router-dom";
 import Dropdown from './Dropdown';
 import Timer from './Timer';
-import Score from './Score';
+import Score from './Score/Score';
 import styles from './Level.module.css'
 
 const SQUARE_SIZE = .015
