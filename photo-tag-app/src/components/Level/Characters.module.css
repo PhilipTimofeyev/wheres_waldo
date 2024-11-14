@@ -1,8 +1,16 @@
 
 
-.character {
+.character,
+.characterFound {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.characterFound {
+    background-color: rgb(37, 225, 8);
 }
 
 .characters {

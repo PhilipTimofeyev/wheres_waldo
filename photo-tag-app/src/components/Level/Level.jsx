@@ -125,10 +125,17 @@ function Level() {
         <div className={styles.navLink}>
             <Link to='/'>Select A Different Level</Link>
         </div>
-        <Countdown setStartGame={setStartGame}/>
-        {startGame && <Score gameOver={gameOver} /> }
-        {startGame && <Characters characters={characters}/> }
-        {startGame && <Picture handleClick={handleClick} level={level}/>}
+        {startGame && <Score 
+                        gameOver={gameOver} 
+                      /> }
+        {startGame && <Characters 
+                        characters={characters}
+                        found={found}
+                        /> }
+        {startGame && <Picture 
+                            handleClick={handleClick} 
+                            level={level}
+                        />}
         {showDropdown && 
             <div className={styles.dropdown} style={{ left: mouseCoord.current[0], top: mouseCoord.current[1] }}>
                 <Dropdown 
@@ -147,7 +154,8 @@ function Level() {
             found={found} 
             bounds={bounds}
         />
-        }
+    }
+        <Countdown setStartGame={setStartGame}/>
     </div>
   )
 }

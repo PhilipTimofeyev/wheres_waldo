@@ -2,9 +2,9 @@ import { React, useState, useEffect } from 'react'
 import styles from './Level.module.css'
 
 function Countdown({ setStartGame }) {
-    const Countdown = 1 // seconds
+    const COUNTDOWN = 1 // seconds
 
-    const [count, setCount] = useState(Countdown);
+    const [count, setCount] = useState(COUNTDOWN);
     const [showText, setShowText] = useState(true);
 
 
