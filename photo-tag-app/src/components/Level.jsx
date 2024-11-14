@@ -7,14 +7,10 @@ import styles from './MainGame.module.css'
 
 const SQUARE_SIZE = .015
 
-const API_SCORE_URL = "http://127.0.0.1:3000/api/scores"
-
-
 function Level() {
     const [level, setLevel] = useState();
     const [characters, setCharacters] = useState();
     const [gameOver, setGameOver] = useState(false)
-    const [currentScore, setCurrentScore] = useState()
     const [found, setFound] = useState([])
     const [showDropdown, setShowDropdown] = useState(false); 
     const mouseCoord = useRef()
@@ -45,34 +41,9 @@ function Level() {
             ).json();
 
             setCharacters(data);
-            createScore()
         };
         dataFetch();
     }, [level]);
-
-    async function createScore() {
-        const postBody = {
-            username: 'Anonymous',
-            picture_id: levelID
-        };
-
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(postBody)
-        };
-
-        try {
-            const response = await fetch(API_SCORE_URL, requestOptions);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const responseData = await response.json();
-            setCurrentScore(responseData)
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    } 
 
     function handleClick(e) {
         if (!gameOver) {
@@ -80,7 +51,6 @@ function Level() {
             showDropdown ? setShowDropdown(false) : setShowDropdown(true)
             // Set bounds to establish proportion of image
             bounds.current = e.target.getBoundingClientRect()
-            console.log(bounds.current)
         }
     }
 
@@ -133,16 +103,6 @@ function Level() {
             (userY > (charY - squareValidAreaY) && userY < (charY + squareValidAreaY))
     }
 
-    // const characterList = characters.map(character => {
-    //         return (
-    //             <li key={character.id} className={styles.character}>
-    //                 <h5>{character.name} </h5>
-    //                 <img src={character.image} />
-    //             </li>
-    //         )
-    //     })
-
-
     useEffect(() => {
         function endGame() {
             let allFound
@@ -162,7 +122,7 @@ function Level() {
     <>
         <Link to='/'>Select A Different Level</Link>
         {characters && <Characters characters={characters}/> }
-        <Score gameOver={gameOver} scoreQuery={currentScore} />
+        <Score gameOver={gameOver} />
         {level && <Picture handleClick={handleClick} level={level}/>}
         {showDropdown && 
             <div className={styles.dropdown} style={{ left: mouseCoord.current[0], top: mouseCoord.current[1] }}>
@@ -194,8 +154,8 @@ function Characters({characters}) {
 
     return (
         <>
-            <ul class={styles.characters}>
-                <h3>People to find: </h3>
+            <ul className={styles.characters}>
+                <h3>Can you find: </h3>
                 {characterList}
             </ul>
         </>
