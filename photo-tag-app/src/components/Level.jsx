@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import Dropdown from './Dropdown';
 import Timer from './Timer';
 import Score from './Score';
-import styles from './MainGame.module.css'
+import styles from './Level.module.css'
 
 const SQUARE_SIZE = .015
 
@@ -117,8 +117,8 @@ function Level() {
     <div className={styles.mainContainer}>
         <Link to='/'>Select A Different Level</Link>
         <Countdown setStartGame={setStartGame}/>
-        {startGame && <Characters characters={characters}/> }
         {startGame && <Score gameOver={gameOver} /> }
+        {startGame && <Characters characters={characters}/> }
         {startGame && <Picture handleClick={handleClick} level={level}/>}
         {showDropdown && 
             <div className={styles.dropdown} style={{ left: mouseCoord.current[0], top: mouseCoord.current[1] }}>
@@ -153,6 +153,7 @@ function Characters({characters}) {
             <ul className={styles.characters}>
                 <h3>Can you find: </h3>
                 {characterList}
+                <h3>?</h3>
             </ul>
         </>
     )

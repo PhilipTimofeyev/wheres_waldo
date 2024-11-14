@@ -142,8 +142,8 @@ function HighScores({allScores, userScore, setShowForm}) {
     return (
         <>
             {isHighScore && <h2>New High Score!</h2>}
-            {isTopFive && <h2>You're in the Top Five!</h2>}
-            <h3>You solved it in {userScore.score} seconds!</h3>
+            {isTopFive && <h2><u>You're in the Top Five!</u></h2>}
+            <h3>You solved it in <br/>{userScore.score} seconds!</h3>
             <div className={styles.table}>
                 <table>
                     <thead>

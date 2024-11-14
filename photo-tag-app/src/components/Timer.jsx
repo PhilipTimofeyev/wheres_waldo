@@ -35,7 +35,7 @@ function Timer({gameOver}) {
 
     return (
         <div className={styles.timerDisplay}>
-            <h1>Timer: {setFixedTime()}</h1>
+            <h5>Timer: {setFixedTime()}</h5>
         </div>
     );
 }

@@ -4,7 +4,6 @@
     margin: auto;
     max-height: 80dvh;
     width: auto;
-    /* min-width: 90dvw; */
 }
 
 /* @media screen and (max-width: 6000px) {
@@ -23,12 +22,13 @@
     justify-content: center;
 }
 
-.targetSquare {
+.targetSquare,
+.foundSquare {
 
     width: 50px;
     height: 50px;
     border-style: solid;
-    border-color: red;
+    border-radius: 100px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -36,17 +36,12 @@
     display: block;
 }
 
-.foundSquare {
+.targetSquare {
+    border-color: red;
+}
 
-    width: 50px;
-    height: 50px;
-    border-style: solid;
+.foundSquare {
     border-color: rgb(8, 219, 100);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: block;
 }
 
 .dropdown {
@@ -61,7 +56,13 @@
     display: flex;
     gap: 50px;
     margin: auto;
+    /* margin-bottom: 10dvw; */
     justify-content: center;
+    align-items: center;
+}
+
+.characters h3 {
+    font-size: var(--step--1);
 }
 
 .characters li {
@@ -85,7 +86,7 @@
     position: absolute;
     top: 50dvh;
     left: 50dvw;
-    font-size: 3em;
+    font-size: var(--step-4);
     animation: move-words 20s linear, fadeOutAnimation linear 5s;
 }
 
