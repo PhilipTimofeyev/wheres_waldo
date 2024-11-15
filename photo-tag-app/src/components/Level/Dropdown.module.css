@@ -18,7 +18,7 @@
     color: white;
     list-style-type: none;
     font-weight: bold;
-    padding: clamp(.5rem, .6dvw + .2rem, 10rem);
+    padding: clamp(.1rem, .3dvw + .2rem, 10rem);
     margin: 0;
     width: clamp(.5rem, 7dvw + 2rem, 10rem);
 }
