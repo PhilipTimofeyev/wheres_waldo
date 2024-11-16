@@ -8,7 +8,7 @@ function ScoreModal({gameOver, scoreQuery, userScore, setUserScore}) {
     const [allScores, setAllScores] = useState(false)
     const [showForm, setShowForm] = useState(false)
 
-    SCORES_API_URL = "https://wheres-waldo-philip-timofeyev-af6cdea7175a.herokuapp.com/api/scores/"
+    const SCORES_API_URL = "https://wheres-waldo-philip-timofeyev-af6cdea7175a.herokuapp.com/api/scores/"
 
     useEffect(() => {
         getAllScores()

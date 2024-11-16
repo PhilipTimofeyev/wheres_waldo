@@ -8,7 +8,7 @@ function Score({ gameOver }) {
     const [scoreQuery, setScoreQuery] = useState()
     const { levelID } = useParams();
 
-    const API_SCORES_URL = "https://wheres-waldo-philip-timofeyev-af6cdea7175a.herokuapp.com/api/scores/"
+    const SCORES_API_URL = "https://wheres-waldo-philip-timofeyev-af6cdea7175a.herokuapp.com/api/scores/"
 
     useEffect(() => {
         if (gameOver) {
@@ -31,7 +31,7 @@ function Score({ gameOver }) {
         };
 
         try {
-            const response = await fetch(API_SCORES_URL, requestOptions);
+            const response = await fetch(SCORES_API_URL, requestOptions);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -54,7 +54,7 @@ function Score({ gameOver }) {
         };
 
         try {
-            const response = await fetch(`${API_SCORES_URL}${scoreQuery.id}`, requestOptionsPatch);
+            const response = await fetch(`${SCORES_API_URL}${scoreQuery.id}`, requestOptionsPatch);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
