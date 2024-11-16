@@ -286,5 +286,8 @@ DEPENDENCIES
   ruby-vips (~> 2.1, >= 2.1.4)
   tzinfo-data
 
+RUBY VERSION
+   ruby 3.3.4p94
+
 BUNDLED WITH
    2.5.11

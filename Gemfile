@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.1"
+ruby "~> 3.3.4"
 
 gem "rack-cors"
 # Use postgresql as the database for Active Record
