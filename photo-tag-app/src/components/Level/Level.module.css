@@ -60,13 +60,10 @@
     top: 50dvh;
     left: 50dvw;
     font-size: var(--step-4);
-    animation: move-words 20s linear, fadeOutAnimation linear 5s;
+    animation: move-words 20s linear, fadeOutAnimation linear 6s;
 }
 
 @keyframes move-words {
-    0% {
-        bottom: -100%;
-    }
 
     100% {
         top: 100%;

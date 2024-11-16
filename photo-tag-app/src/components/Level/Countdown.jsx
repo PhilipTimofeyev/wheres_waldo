@@ -2,7 +2,7 @@ import { React, useState, useEffect } from 'react'
 import styles from './Level.module.css'
 
 function Countdown({ setStartGame }) {
-    const COUNTDOWN = 1 // seconds
+    const COUNTDOWN = 3 // seconds
 
     const [count, setCount] = useState(COUNTDOWN);
     const [showText, setShowText] = useState(true);
@@ -24,7 +24,7 @@ function Countdown({ setStartGame }) {
         if (showText) {
             const timeoutId = setTimeout(() => {
                 setShowText(false);
-            }, 4000);
+            }, 5000);
 
             return () => clearTimeout(timeoutId);
         }
