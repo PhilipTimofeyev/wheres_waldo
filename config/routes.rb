@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get "characters/show"
   namespace :api do
-    resources :pictures
+    resources :pictures, only: [ :index, :show ]
     resources :scores
     resources :characters, only: [ :show ]
   end
