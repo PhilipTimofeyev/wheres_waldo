@@ -8,15 +8,16 @@ function ScoreModal({gameOver, scoreQuery, userScore, setUserScore}) {
     const [allScores, setAllScores] = useState(false)
     const [showForm, setShowForm] = useState(false)
 
+    SCORES_API_URL = "https://wheres-waldo-philip-timofeyev-af6cdea7175a.herokuapp.com/api/scores/"
+
     useEffect(() => {
         getAllScores()
     }, [gameOver, userScore])
 
     const getAllScores = async () => {
-        const API_SCORE_URL = "http://127.0.0.1:3000/api/scores"
 
         try {
-            const response = await fetch(`${API_SCORE_URL}?picture_id=${scoreQuery.picture_id}`)
+            const response = await fetch(`${SCORES_API_URL}?picture_id=${scoreQuery.picture_id}`)
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -44,7 +45,7 @@ function ScoreModal({gameOver, scoreQuery, userScore, setUserScore}) {
         };
 
         try {
-            const response = await fetch(`https://wheres-waldo-philip-timofeyev-af6cdea7175a.herokuapp.com/api/scores/${scoreQuery.id}`, requestOptionsPatch);
+            const response = await fetch(`${SCORES_API_URL}${scoreQuery.id}`, requestOptionsPatch);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -58,7 +59,7 @@ function ScoreModal({gameOver, scoreQuery, userScore, setUserScore}) {
     // Optional and created if needed
     const removeScore = async() => {
         try {
-            const response = await fetch(`https://wheres-waldo-philip-timofeyev-af6cdea7175a.herokuapp.com/api/scores/${userScore.id}`, {method: 'DELETE'});
+            const response = await fetch(`${SCORES_API_URL}${userScore.id}`, {method: 'DELETE'});
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
