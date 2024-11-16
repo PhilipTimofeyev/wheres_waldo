@@ -44,7 +44,7 @@ function ScoreModal({gameOver, scoreQuery, userScore, setUserScore}) {
         };
 
         try {
-            const response = await fetch(`http://127.0.0.1:3000/api/scores/${scoreQuery.id}`, requestOptionsPatch);
+            const response = await fetch(`https://wheres-waldo-philip-timofeyev-af6cdea7175a.herokuapp.com/api/scores/${scoreQuery.id}`, requestOptionsPatch);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -58,7 +58,7 @@ function ScoreModal({gameOver, scoreQuery, userScore, setUserScore}) {
     // Optional and created if needed
     const removeScore = async() => {
         try {
-            const response = await fetch(`http://127.0.0.1:3000/api/scores/${userScore.id}`, {method: 'DELETE'});
+            const response = await fetch(`https://wheres-waldo-philip-timofeyev-af6cdea7175a.herokuapp.com/api/scores/${userScore.id}`, {method: 'DELETE'});
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }

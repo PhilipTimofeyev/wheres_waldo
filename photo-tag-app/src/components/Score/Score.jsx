@@ -8,7 +8,7 @@ function Score({ gameOver }) {
     const [scoreQuery, setScoreQuery] = useState()
     const { levelID } = useParams();
 
-    const API_SCORES_URL = "http://127.0.0.1:3000/api/scores/"
+    const API_SCORES_URL = "https://wheres-waldo-philip-timofeyev-af6cdea7175a.herokuapp.com/api/scores/"
 
     useEffect(() => {
         if (gameOver) {

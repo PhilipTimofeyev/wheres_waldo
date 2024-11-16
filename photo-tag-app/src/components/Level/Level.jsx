@@ -23,7 +23,7 @@ function Level() {
 
     // Get Level Info
     useEffect(() => {
-        const API_URL = `http://127.0.0.1:3000/api/pictures/${levelID}`
+        const API_URL = `https://wheres-waldo-philip-timofeyev-af6cdea7175a.herokuapp.com/api/pictures/${levelID}`
         const dataFetch = async () => {
             const data = await (
                 await fetch(
@@ -38,7 +38,7 @@ function Level() {
 
     // Get Characters Info
     useEffect(() => {
-        const API_URL = `http://127.0.0.1:3000/api/characters/${levelID}`
+        const API_URL = `https://wheres-waldo-philip-timofeyev-af6cdea7175a.herokuapp.com/api/characters/${levelID}`
         const dataFetch = async () => {
             const data = await (
                 await fetch(

@@ -5,7 +5,7 @@ import LevelThumbnails from './components/LevelThumbnails';
 function App() {
   const [levels, setLevels] = useState();
 
-  const API_LEVELS_URL = "http://127.0.0.1:3000/api/pictures"
+  const API_LEVELS_URL = "https://wheres-waldo-philip-timofeyev-af6cdea7175a.herokuapp.com/api/pictures"
 
   useEffect(() => {
     const dataFetch = async () => {
