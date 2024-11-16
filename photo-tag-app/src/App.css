@@ -52,6 +52,12 @@ ul {
   padding: 10px;
 }
 
+.levelTiles img {
+  aspect-ratio: 16 / 9;
+  position: center;
+  object-fit: cover;
+}
+
 li {
   list-style-type: none;
 }
