@@ -53,7 +53,7 @@
 
 The app is a digital version of the Martin Handford *Wheres Wally* books originally published in 1987, where the reader or user is presented with a picture of a scene, typically with a theme, where there is a dense arrangement of varying characters. The main character is the famous Waldo.
 
-<img src="./app/assets/images/waldo-main.png" alt="Waldo" style="zoom:15%;" />
+<img src="./app/assets/images/waldo-main.png" alt="Waldo" height="200"  />
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
