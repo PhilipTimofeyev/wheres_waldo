@@ -115,7 +115,7 @@ To prevent any foul play, the timer and score is created and checked on the Rail
 
 This webapp was built with responsive design in mind, and all features are expected to work on desktop and mobile:
 
-<img src="./app/assets/github_images/responsive-main.png" alt="Waldo" style="zoom:25%;" />
+<img src="./app/assets/github_images/responsive-main.png" alt="Waldo" height="600" />
 
 
 
