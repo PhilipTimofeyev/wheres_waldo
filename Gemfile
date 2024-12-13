@@ -47,4 +47,4 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 end
 
-gem "aws-sdk-s3", "~> 1.171"
+gem "aws-sdk-s3", "~> 1.176"
